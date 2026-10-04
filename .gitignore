@@ -5,3 +5,10 @@ __pycache__/
 cache/
 _deprecated_runs/
 *.npy
+__pycache__/
+.ipynb_checkpoints/
+*.pkl
+*.bak
+cache/
+_deprecated_runs/
+*.npy
