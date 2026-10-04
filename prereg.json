@@ -1,0 +1,29 @@
+{
+ "created_utc": "2026-10-04T09:05:46.167025+00:00",
+ "explore_model": "A",
+ "hypotheses": {
+  "H1a": "At equal bytes/vector, PCA (float32, d=B/4) > random projection (float32, d=B/4) in macro nDCG@10, all budgets.",
+  "H1b": "At equal bytes/vector (B>=32), PCA+SQ8 (d=B) > PCA float32 (d=B/4), all budgets.",
+  "H1c": "At B<=64 bytes/vector, OPQ (m=B) > PCA+SQ8 (d=B).",
+  "H2a": "DIAGNOSTIC, not a hypothesis: flip probability vs z = margin*sqrt(d); reported as model fit (R2, calibration bins).",
+  "H2b": "Adding source indicators to the z-only model raises deviance-R2 by less than delta_r2_max: supported only if the upper limit of the contract-cluster bootstrap CI of delta_R2 is below delta_r2_max.",
+  "H3a": "Identification share (oracle-global)/oracle at full precision is larger for the focus source than for every other non-excluded source.",
+  "H3b": "RP d=48 raises the identification share relative to full precision in every non-excluded source.",
+  "H4": "Cross-source top-1 confusion rate of global dense search rises under compression (RPf32 d=48 vs raw) in every non-excluded source. typed_vs_xsrc.csv reports typed-pool gain next to the confusion rate descriptively (typed gain is a pool-restriction effect by construction).",
+  "H5": "Two-stage retrieval (doc-level BM25 top-3 -> dense chunk ranking) > global dense, macro nDCG. Scope: queries name the contract (template), so this is the effect when the query identifies the document.",
+  "_decision_rule": "Universal claims (all budgets / all sources) are supported only if EVERY non-excluded row passes Holm-adjusted p<alpha. Sources with fewer than min_clusters contracts are excluded from the verdict and from macro averages (reported per source only)."
+ },
+ "params": {
+  "B": 4000,
+  "alpha": 0.05,
+  "budgets": "16,32,64,96,192,384,768,1536",
+  "delta_r2_max": 0.02,
+  "ext_reps": "raw,PCAsq8_B192",
+  "focus_source": "contractnli",
+  "max_q_per_source": 0,
+  "min_clusters": 20,
+  "nlist": 1024,
+  "rp_draws": 3
+ },
+ "script_sha256": "98cef001be37048018233a56cb001afaad6cf7ffd42a9721ae9cfe0ef736beb3"
+}
