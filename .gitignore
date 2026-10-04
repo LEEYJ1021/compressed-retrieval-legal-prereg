@@ -1,0 +1,7 @@
+__pycache__/
+.ipynb_checkpoints/
+*.pkl
+*.bak
+cache/
+_deprecated_runs/
+*.npy

@@ -1,0 +1,9 @@
+id,n_rows,n_pass,n_excluded,decision
+H1a,8,2,0,not supported
+H1b,6,6,0,supported
+H1c,0,0,0,untested
+H3a,2,1,1,not supported
+H3b,3,3,1,supported
+H4,3,3,1,supported
+H5,1,1,0,supported
+H2b,1,0,0,inconclusive
