@@ -1,0 +1,6 @@
+chunks 160340 (160340, 768) | queries_fixed 6889 keep 6879 | Q (6879, 768)
+qrels type: dict | size: 6887
+qrels sample: [('privacy_qa_0', {'116': 1, '117': 2}), ('privacy_qa_1', {'116': 1, '117': 2}), ('privacy_qa_2', {'110': 2, '118': 1, '119': 1})]
+gold 비어있음 0 | len(gold)==n_rel_chunks 비율 1.000 | 질의와 같은 src 비율 1.000
+privacy_qa 회사명-문서명 일치: 194/194
+OK -> data

@@ -1,0 +1,29 @@
+원본 txt 파일: 714
+청크 문서 중 원본 파일 없음: 0
+
+[1] 청크 좌표 검증 (비율)
+              저장좌표일치   복원   실패
+src                          
+contractnli     1.0  0.0  0.0
+cuad            1.0  0.0  0.0
+maud            1.0  0.0  0.0
+privacy_qa      1.0  0.0  0.0
+cuad: 원본 tests 4042
+contractnli: 원본 tests 977
+maud: 원본 tests 1676
+privacy_qa: 원본 tests 194
+
+[3] 원본 span 대조 (rec=정답 구간 포획률, prec=청크 정밀도, *_lt1=1 미만 질의 비율)
+      qrels         src   질의  정답없음  원본매칭실패  모호   평가   rec  prec  rec_lt1  prec_lt1
+  qrels(원본)        cuad 4042     8       0   0 4034 1.000 1.000    0.000     0.000
+  qrels(원본) contractnli  977     0       0   0  977 1.000 1.000    0.000     0.000
+  qrels(원본)        maud 1676     0       0   0 1676 1.000 1.000    0.000     0.000
+  qrels(원본)  privacy_qa  194     0       0   4  194 1.000 1.000    0.000     0.000
+qrels_fixed        cuad 4042     8       0   0 4034 1.000 1.000    0.000     0.000
+qrels_fixed contractnli  977     0       0   0  977 1.000 1.000    0.000     0.000
+qrels_fixed        maud 1676     2       0   0 1674 0.496 0.349    0.618     0.918
+qrels_fixed  privacy_qa  194     0       0   4  194 1.000 1.000    0.000     0.000
+
+저장: verify_qrels_result.csv
+판정: rec, prec가 1.0에 가깝고 *_lt1이 작으면 'provenance 검증됨'.
+      prec가 1 미만이어도 청크 크기가 span보다 크면 정상일 수 있음(rec를 우선 볼 것).

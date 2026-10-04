@@ -1,0 +1,15 @@
+nohup: ignoring input
+[동결 확인] cfr_v2.py sha256 일치 98cef001be37
+[data] 동일 질의문+동일 정답 중복 제거: 2건
+[data] N=160340 D=1024 nq=6877 docs=714 sources=['contractnli', 'cuad', 'maud', 'privacy_qa']
+[계획] D=1024 | 보충할 PQ m=[128, 256, 512] | 기존 PQ=[16, 32, 64]
+  PQ_B128        d=1024 mem=    20.6MiB lat=10.23ms ndcg=0.0974
+  PQ_B256        d=1024 mem=    40.1MiB lat=26.16ms ndcg=0.1192
+  PQ_B512        d=1024 mem=    79.3MiB lat=61.97ms ndcg=0.1230
+   name  mem_mib  lat_ms  ndcg_macro  pcasq8_same_mem  diff_vs_pcasq8   new
+ PQ_B16   3.4467  1.2759      0.0099           0.0079          0.0020 False
+ PQ_B32   5.8933  2.1623      0.0219           0.0160          0.0060 False
+ PQ_B64  10.7865  3.9552      0.0394           0.0310          0.0084 False
+PQ_B128  20.5728 10.2306      0.0652           0.0563          0.0089  True
+PQ_B256  40.1456 26.1635      0.0839           0.0783          0.0056  True
+PQ_B512  79.2911 61.9675      0.0890           0.0888          0.0002  True

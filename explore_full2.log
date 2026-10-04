@@ -1,0 +1,5 @@
+nohup: ignoring input
+[data] 동일 질의문+동일 정답 중복 제거: 2건
+[data] N=160340 D=768 nq=6877 docs=714 sources=['contractnli', 'cuad', 'maud', 'privacy_qa']
+[주의] 소스별 클러스터(계약서) 수: {'contractnli': 95, 'cuad': 461, 'maud': 150, 'privacy_qa': 7} -> 20개 미만이면 CI 신뢰도 낮음
+[A] 표현 평가

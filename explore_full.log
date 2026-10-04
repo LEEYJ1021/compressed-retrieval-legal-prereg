@@ -1,0 +1,11 @@
+nohup: ignoring input
+[data] 동일 질의문+동일 정답 중복 제거: 2건
+[data] N=160340 D=768 nq=6877 docs=714 sources=['contractnli', 'cuad', 'maud', 'privacy_qa']
+[주의] 소스별 클러스터(계약서) 수: {'contractnli': 95, 'cuad': 461, 'maud': 150, 'privacy_qa': 7} -> 20개 미만이면 CI 신뢰도 낮음
+[A] 표현 평가
+  raw            d= 768 mem=   469.7MiB lat=32.70ms ndcg=0.0888
+  RPf32_B16      d=   4 mem=     2.4MiB lat=1.15ms ndcg=0.0001
+  PCAf32_B16     d=   4 mem=     2.4MiB lat=0.99ms ndcg=0.0006
+  RPsq8_B16      d=  16 mem=     2.4MiB lat=1.43ms ndcg=0.0029
+  PCAsq8_B16     d=  16 mem=     2.4MiB lat=0.72ms ndcg=0.0055
+  PQ_B16         d= 768 mem=     3.2MiB lat=1.23ms ndcg=0.0226

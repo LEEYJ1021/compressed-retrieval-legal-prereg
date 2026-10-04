@@ -1,0 +1,775 @@
+
+========== 1. 동결 무결성 (freeze_hashes.txt vs 현재 파일) ==========
+98cef001be37048018233a56cb001afaad6cf7ffd42a9721ae9cfe0ef736beb3  cfr_v2.py
+d52eed76013f453ce09f98b2bafada6a10db8808c0839428a0a0793225c27c90  prereg.json
+95602571806b3872434479f4378376254a02d9517fc4de048c1adb48b589b6e1  analysis_plan.md
+
+cfr_v2.py            sha256=98cef001be370480  mtime=10-04 17:51:58
+analysis_plan.md     sha256=95602571806b3872  mtime=10-04 18:06:36
+prereg.json          sha256=d52eed76013f453c  mtime=10-04 18:05:46
+
+========== 2. 사전 기록 (prereg.json) ==========
+{
+ "created_utc": "2026-10-04T09:05:46.167025+00:00",
+ "explore_model": "A",
+ "hypotheses": {
+  "H1a": "At equal bytes/vector, PCA (float32, d=B/4) > random projection (float32, d=B/4) in macro nDCG@10, all budgets.",
+  "H1b": "At equal bytes/vector (B>=32), PCA+SQ8 (d=B) > PCA float32 (d=B/4), all budgets.",
+  "H1c": "At B<=64 bytes/vector, OPQ (m=B) > PCA+SQ8 (d=B).",
+  "H2a": "DIAGNOSTIC, not a hypothesis: flip probability vs z = margin*sqrt(d); reported as model fit (R2, calibration bins).",
+  "H2b": "Adding source indicators to the z-only model raises deviance-R2 by less than delta_r2_max: supported only if the upper limit of the contract-cluster bootstrap CI of delta_R2 is below delta_r2_max.",
+  "H3a": "Identification share (oracle-global)/oracle at full precision is larger for the focus source than for every other non-excluded source.",
+  "H3b": "RP d=48 raises the identification share relative to full precision in every non-excluded source.",
+  "H4": "Cross-source top-1 confusion rate of global dense search rises under compression (RPf32 d=48 vs raw) in every non-excluded source. typed_vs_xsrc.csv reports typed-pool gain next to the confusion rate descriptively (typed gain is a pool-restriction effect by construction).",
+  "H5": "Two-stage retrieval (doc-level BM25 top-3 -> dense chunk ranking) > global dense, macro nDCG. Scope: queries name the contract (template), so this is the effect when the query identifies the document.",
+  "_decision_rule": "Universal claims (all budgets / all sources) are supported only if EVERY non-excluded row passes Holm-adjusted p<alpha. Sources with fewer than min_clusters contracts are excluded from the verdict and from macro averages (reported per source only)."
+ },
+ "params": {
+  "B": 4000,
+  "alpha": 0.05,
+  "budgets": "16,32,64,96,192,384,768,1536",
+  "delta_r2_max": 0.02,
+  "ext_reps": "raw,PCAsq8_B192",
+  "focus_source": "contractnli",
+  "max_q_per_source": 0,
+  "min_clusters": 20,
+  "nlist": 1024,
+  "rp_draws": 3
+ },
+ "script_sha256": "98cef001be37048018233a56cb001afaad6cf7ffd42a9721ae9cfe0ef736beb3"
+}
+
+========== 3. MAUD qrels 검증 결과 (verify_qrels_result.csv) ==========
+(8, 11) ['qrels', 'src', '질의', '정답없음', '원본매칭실패', '모호', '평가', 'rec', 'prec', 'rec_lt1', 'prec_lt1']
+         count unique        top freq     mean       std    min     25%     50%     75%     max
+qrels        8      2  qrels(원본)    4      NaN       NaN    NaN     NaN     NaN     NaN     NaN
+src          8      4       cuad    2      NaN       NaN    NaN     NaN     NaN     NaN     NaN
+질의         8.0    NaN        NaN  NaN  1722.25  1537.561  194.0  781.25  1326.5  2267.5  4042.0
+정답없음       8.0    NaN        NaN  NaN     2.25     3.615    0.0     0.0     0.0     3.5     8.0
+원본매칭실패     8.0    NaN        NaN  NaN      0.0       0.0    0.0     0.0     0.0     0.0     0.0
+모호         8.0    NaN        NaN  NaN      1.0     1.852    0.0     0.0     0.0     1.0     4.0
+평가         8.0    NaN        NaN  NaN   1720.0  1534.121  194.0  781.25  1325.5  2265.5  4034.0
+rec        8.0    NaN        NaN  NaN    0.937     0.178  0.496     1.0     1.0     1.0     1.0
+prec       8.0    NaN        NaN  NaN    0.919      0.23  0.349     1.0     1.0     1.0     1.0
+rec_lt1    8.0    NaN        NaN  NaN    0.077     0.218    0.0     0.0     0.0     0.0   0.618
+prec_lt1   8.0    NaN        NaN  NaN    0.115     0.325    0.0     0.0     0.0     0.0   0.918
+
+[verify_qrels.log 끝 25줄]
+              저장좌표일치   복원   실패
+src                          
+contractnli     1.0  0.0  0.0
+cuad            1.0  0.0  0.0
+maud            1.0  0.0  0.0
+privacy_qa      1.0  0.0  0.0
+cuad: 원본 tests 4042
+contractnli: 원본 tests 977
+maud: 원본 tests 1676
+privacy_qa: 원본 tests 194
+
+[3] 원본 span 대조 (rec=정답 구간 포획률, prec=청크 정밀도, *_lt1=1 미만 질의 비율)
+      qrels         src   질의  정답없음  원본매칭실패  모호   평가   rec  prec  rec_lt1  prec_lt1
+  qrels(원본)        cuad 4042     8       0   0 4034 1.000 1.000    0.000     0.000
+  qrels(원본) contractnli  977     0       0   0  977 1.000 1.000    0.000     0.000
+  qrels(원본)        maud 1676     0       0   0 1676 1.000 1.000    0.000     0.000
+  qrels(원본)  privacy_qa  194     0       0   4  194 1.000 1.000    0.000     0.000
+qrels_fixed        cuad 4042     8       0   0 4034 1.000 1.000    0.000     0.000
+qrels_fixed contractnli  977     0       0   0  977 1.000 1.000    0.000     0.000
+qrels_fixed        maud 1676     2       0   0 1674 0.496 0.349    0.618     0.918
+qrels_fixed  privacy_qa  194     0       0   4  194 1.000 1.000    0.000     0.000
+
+저장: verify_qrels_result.csv
+판정: rec, prec가 1.0에 가깝고 *_lt1이 작으면 'provenance 검증됨'.
+      prec가 1 미만이어도 청크 크기가 span보다 크면 정상일 수 있음(rec를 우선 볼 것).
+
+
+========== 4. out_full 하위 CSV 전수 (행 40개 이하는 전체, 초과는 앞 8행) ==========
+
+--- out_full/confirm_B/ann_layer.csv  shape=(15, 10)
+        rep index      param  ndcg_macro  ratio_to_flat   r_lo   r_hi  overlap10  lat_ms  mem_mib
+        raw  Flat          -      0.1242         1.0000 1.0000 1.0000     1.0000 43.4156 626.3282
+        raw   IVF   nprobe=8      0.1186         0.9330 0.9032 0.9616     0.7096  0.4699 631.5594
+        raw   IVF  nprobe=32      0.1243         0.9910 0.9679 1.0089     0.8508  1.4184 631.5594
+        raw   IVF nprobe=128      0.1244         0.9965 0.9819 1.0075     0.9521  6.7139 631.5594
+        raw  HNSW     efS=64      0.1177         0.9063 0.8774 0.9334     0.8791  0.3112 667.9488
+PCAf32_B768  Flat          -      0.1032         1.0000 1.0000 1.0000     1.0000  7.8926 117.4366
+PCAf32_B768   IVF   nprobe=8      0.0943         0.9105 0.8865 0.9340     0.7299  0.0944 119.4178
+PCAf32_B768   IVF  nprobe=32      0.1012         0.9835 0.9712 0.9954     0.8927  0.2858 119.4178
+PCAf32_B768   IVF nprobe=128      0.1027         0.9959 0.9909 1.0005     0.9772  0.8576 119.4178
+PCAf32_B768  HNSW     efS=64      0.1024         0.9903 0.9803 0.9987     0.9431  0.1019 159.0572
+ RPf32_B768  Flat          -      0.0791         1.0000 1.0000 1.0000     1.0000  7.9275 117.4366
+ RPf32_B768   IVF   nprobe=8      0.0728         0.9141 0.8783 0.9486     0.5630  0.0895 119.4178
+ RPf32_B768   IVF  nprobe=32      0.0775         0.9820 0.9589 1.0043     0.7591  0.2794 119.4178
+ RPf32_B768   IVF nprobe=128      0.0787         0.9955 0.9867 1.0034     0.9305  0.9905 119.4178
+ RPf32_B768  HNSW     efS=64      0.0757         0.9451 0.9177 0.9688     0.8575  0.2186 159.0572
+
+--- out_full/confirm_B/bm25_vs_dense.csv  shape=(15, 4)
+    rep      source   ndcg  dochit
+    raw contractnli 0.0876  0.4330
+    raw        cuad 0.1713  0.9973
+    raw        maud 0.0101  0.6380
+    raw  privacy_qa 0.3175  0.9844
+    raw       macro 0.0897  0.6894
+   BM25 contractnli 0.0628  0.4862
+   BM25        cuad 0.0442  0.9998
+   BM25        maud 0.0056  1.0000
+   BM25  privacy_qa 0.1032  0.9583
+   BM25       macro 0.0375  0.8286
+BM25_sw contractnli 0.0661  0.4770
+BM25_sw        cuad 0.0600  1.0000
+BM25_sw        maud 0.0061  0.9958
+BM25_sw  privacy_qa 0.1108  0.9219
+BM25_sw       macro 0.0441  0.8243
+
+--- out_full/confirm_B/decomposition.csv  shape=(68, 13)
+      rep    d      source  ndcg_global  ndcg_oracle  id_share  id_lo  id_hi  loss_total  loss_localization  loss_identification  lid_lo  lid_hi
+      raw 1024 contractnli       0.0876       0.5598    0.8436 0.7903 0.8929      0.0000             0.0000               0.0000  0.0000  0.0000
+      raw 1024        cuad       0.1713       0.2345    0.2695 0.2339 0.3078      0.0000             0.0000               0.0000  0.0000  0.0000
+      raw 1024        maud       0.0101       0.0723    0.8596 0.8109 0.9026      0.0000             0.0000               0.0000  0.0000  0.0000
+      raw 1024  privacy_qa       0.3145       0.4013    0.2058 0.0076 0.4011      0.0000             0.0000               0.0000  0.0000  0.0000
+RPf32_B16    4 contractnli       0.0001       0.3556    0.9998 0.9994 1.0000      0.0875             0.2042              -0.1167 -0.1529 -0.0792
+RPf32_B16    4        cuad       0.0001       0.1026    0.9989 0.9976 0.9999      0.1712             0.1319               0.0393  0.0297  0.0485
+RPf32_B16    4        maud       0.0000       0.0117    1.0000 1.0000 1.0000      0.0101             0.0606              -0.0504 -0.0581 -0.0432
+RPf32_B16    4  privacy_qa       0.0000       0.2572    1.0000 1.0000 1.0000      0.3145             0.1441               0.1703  0.0726  0.2671
+
+--- out_full/confirm_B/fragility_importance.csv  shape=(36, 3)
+        rep         feature  perm_importance_auc
+PCAf32_B384            qlen               0.0003
+PCAf32_B384      id_density               0.0072
+PCAf32_B384         overlap              -0.0017
+PCAf32_B384  log_doc_chunks               0.0105
+PCAf32_B384      log_n_gold               0.0079
+PCAf32_B384          margin               0.0621
+PCAf32_B384          s_gold               0.1581
+PCAf32_B384   comp_same_doc              -0.0000
+PCAf32_B384 src_contractnli               0.0018
+PCAf32_B384        src_cuad               0.0004
+PCAf32_B384        src_maud              -0.0001
+PCAf32_B384  src_privacy_qa               0.0045
+ RPf32_B384            qlen               0.0138
+ RPf32_B384      id_density               0.0229
+ RPf32_B384         overlap               0.0002
+ RPf32_B384  log_doc_chunks               0.0091
+ RPf32_B384      log_n_gold               0.0154
+ RPf32_B384          margin               0.0124
+ RPf32_B384          s_gold               0.2656
+ RPf32_B384   comp_same_doc               0.0021
+ RPf32_B384 src_contractnli               0.0181
+ RPf32_B384        src_cuad               0.0016
+ RPf32_B384        src_maud              -0.0000
+ RPf32_B384  src_privacy_qa               0.0021
+     PQ_B32            qlen               0.0102
+     PQ_B32      id_density               0.0048
+     PQ_B32         overlap               0.0070
+     PQ_B32  log_doc_chunks               0.0153
+     PQ_B32      log_n_gold               0.0271
+     PQ_B32          margin               0.0076
+     PQ_B32          s_gold               0.1446
+     PQ_B32   comp_same_doc               0.0005
+     PQ_B32 src_contractnli               0.0209
+     PQ_B32        src_cuad               0.0077
+     PQ_B32        src_maud               0.0018
+     PQ_B32  src_privacy_qa               0.0018
+
+--- out_full/confirm_B/fragility_ml.csv  shape=(6, 7)
+        rep     model    n  pos_rate    auc  auc_sd  brier
+PCAf32_B384       hgb 2140    0.4949 0.7729  0.0319 0.1955
+PCAf32_B384 lr_margin 2140    0.4949 0.7261  0.0228 0.2387
+ RPf32_B384       hgb 2140    0.6421 0.8381  0.0150 0.1551
+ RPf32_B384 lr_margin 2140    0.6421 0.7081  0.0283 0.2224
+     PQ_B32       hgb 2140    0.6977 0.7236  0.0227 0.1865
+     PQ_B32 lr_margin 2140    0.6977 0.5976  0.0131 0.2101
+
+--- out_full/confirm_B/frontier.csv  shape=(34, 19)
+        name    fam  B_bytes    d  mem_mib  lat_ms  lat_p95  ndcg_macro     lo     hi  retention  ret_lo  ret_hi  pareto_prob  dochit_macro  ndcg_contractnli  ndcg_cuad  ndcg_maud  ndcg_privacy_qa
+         raw    raw      NaN 1024 626.3282 43.5084  51.9506      0.0897 0.0796 0.1009     1.0000  1.0000  1.0000       0.3572        0.6894            0.0876     0.1713     0.0101           0.3175
+   RPf32_B16  RPf32     16.0    4   2.4466  1.1465   1.3166      0.0001 0.0000 0.0001     0.0007  0.0001  0.0014       0.0008        0.0239            0.0001     0.0001     0.0000           0.0000
+  PCAf32_B16 PCAf32     16.0    4   2.4466  1.1459   1.3177      0.0007 0.0002 0.0014     0.0076  0.0023  0.0149       0.9992        0.0316            0.0016     0.0005     0.0000           0.0016
+   RPsq8_B16  RPsq8     16.0   16   2.4468  0.7217   1.1756      0.0019 0.0014 0.0024     0.0206  0.0159  0.0257       0.0000        0.0926            0.0011     0.0043     0.0001           0.0104
+  PCAsq8_B16 PCAsq8     16.0   16   2.4468  0.7628   0.8965      0.0042 0.0032 0.0053     0.0468  0.0363  0.0588       1.0000        0.0737            0.0037     0.0078     0.0011           0.0484
+      PQ_B16     PQ     16.0 1024   3.4467  1.2759   1.4171      0.0099 0.0084 0.0115     0.1110  0.0901  0.1331       1.0000        0.1545            0.0033     0.0252     0.0013           0.0884
+   RPf32_B32  RPf32     32.0    8   4.8932  1.1341   1.2228      0.0004 0.0002 0.0006     0.0042  0.0022  0.0065       0.0000        0.0385            0.0006     0.0004     0.0001           0.0006
+  PCAf32_B32 PCAf32     32.0    8   4.8932  1.1353   1.1995      0.0015 0.0009 0.0022     0.0168  0.0099  0.0250       0.0000        0.0497            0.0029     0.0015     0.0001           0.0253
+   RPsq8_B32  RPsq8     32.0   32   4.8935  0.9574   1.4996      0.0066 0.0055 0.0079     0.0741  0.0636  0.0851       0.0000        0.1808            0.0073     0.0117     0.0009           0.0233
+  PCAsq8_B32 PCAsq8     32.0   32   4.8935  0.9769   1.4688      0.0118 0.0096 0.0141     0.1318  0.1090  0.1555       0.9272        0.1765            0.0089     0.0241     0.0024           0.0721
+      PQ_B32     PQ     32.0 1024   5.8933  2.1623   2.3133      0.0219 0.0194 0.0247     0.2455  0.2117  0.2826       1.0000        0.2539            0.0086     0.0560     0.0013           0.0815
+   RPf32_B64  RPf32     64.0   16   9.7864  1.0925   1.3992      0.0019 0.0015 0.0024     0.0215  0.0167  0.0266       0.0000        0.0939            0.0013     0.0044     0.0002           0.0112
+  PCAf32_B64 PCAf32     64.0   16   9.7864  1.0157   1.4762      0.0042 0.0032 0.0053     0.0466  0.0364  0.0583       0.0000        0.0751            0.0039     0.0075     0.0012           0.0500
+   RPsq8_B64  RPsq8     64.0   64   9.7869  1.6087   2.2575      0.0219 0.0184 0.0264     0.2444  0.2148  0.2780       0.0015        0.3658            0.0170     0.0467     0.0021           0.0761
+  PCAsq8_B64 PCAsq8     64.0   64   9.7869  1.6200   2.2337      0.0274 0.0240 0.0309     0.3059  0.2697  0.3455       0.9975        0.3253            0.0177     0.0607     0.0038           0.1452
+      PQ_B64     PQ     64.0 1024  10.7865  3.9552   4.1151      0.0394 0.0355 0.0439     0.4408  0.3915  0.4951       1.0000        0.3787            0.0182     0.0967     0.0033           0.1431
+   RPf32_B96  RPf32     96.0   24  14.6796  1.1100   1.7127      0.0048 0.0035 0.0067     0.0536  0.0407  0.0699       0.0000        0.1497            0.0056     0.0082     0.0007           0.0134
+  PCAf32_B96 PCAf32     96.0   24  14.6796  1.0990   1.7649      0.0067 0.0055 0.0080     0.0753  0.0613  0.0906       0.0000        0.1187            0.0046     0.0133     0.0022           0.0540
+   RPsq8_B96  RPsq8     96.0   96  14.6804  2.1535   2.4940      0.0326 0.0284 0.0376     0.3638  0.3365  0.3924       0.0000        0.4511            0.0234     0.0698     0.0046           0.1216
+  PCAsq8_B96 PCAsq8     96.0   96  14.6804  2.2193   3.9821      0.0425 0.0382 0.0470     0.4750  0.4287  0.5235       0.9228        0.4420            0.0277     0.0940     0.0058           0.2078
+  RPf32_B192  RPf32    192.0   48  29.3592  2.0120   2.5486      0.0126 0.0110 0.0144     0.1401  0.1245  0.1560       0.0000        0.2293            0.0076     0.0282     0.0019           0.0462
+ PCAf32_B192 PCAf32    192.0   48  29.3592  1.8341   2.3721      0.0199 0.0171 0.0228     0.2222  0.1920  0.2543       0.0000        0.2531            0.0125     0.0445     0.0026           0.1198
+  RPsq8_B192  RPsq8    192.0  192  29.3607  5.3414   9.6744      0.0582 0.0512 0.0659     0.6489  0.6198  0.6778       0.0000        0.5493            0.0503     0.1171     0.0072           0.2243
+ PCAsq8_B192 PCAsq8    192.0  192  29.3607  4.9934   5.4482      0.0708 0.0638 0.0792     0.7908  0.7439  0.8381       1.0000        0.6220            0.0585     0.1449     0.0090           0.2676
+  RPf32_B384  RPf32    384.0   96  58.7183  3.8115   4.3488      0.0327 0.0284 0.0378     0.3648  0.3372  0.3936       0.0000        0.4501            0.0235     0.0700     0.0046           0.1226
+ PCAf32_B384 PCAf32    384.0   96  58.7183  3.7367   4.3356      0.0427 0.0384 0.0472     0.4770  0.4306  0.5264       0.0000        0.4432            0.0285     0.0938     0.0058           0.2065
+  RPsq8_B384  RPsq8    384.0  384  58.7213 13.1985  17.7177      0.0757 0.0671 0.0855     0.8443  0.8181  0.8702       0.0000        0.6238            0.0733     0.1445     0.0094           0.2490
+ PCAsq8_B384 PCAsq8    384.0  384  58.7213 13.0298  14.9587      0.0875 0.0771 0.0993     0.9757  0.9399  1.0174       1.0000        0.7768            0.0939     0.1590     0.0095           0.3254
+  RPf32_B768  RPf32    768.0  192 117.4366  8.0813   8.2695      0.0582 0.0512 0.0659     0.6487  0.6198  0.6773       0.0000        0.5495            0.0503     0.1171     0.0072           0.2238
+ PCAf32_B768 PCAf32    768.0  192 117.4366  8.0258   8.3598      0.0710 0.0640 0.0794     0.7929  0.7452  0.8417       0.0000        0.6207            0.0590     0.1452     0.0088           0.2684
+  RPsq8_B768  RPsq8    768.0  768 117.4425 22.1640  24.0755      0.0813 0.0721 0.0915     0.9059  0.8855  0.9247       0.0000        0.6553            0.0784     0.1562     0.0092           0.2792
+ PCAsq8_B768 PCAsq8    768.0  768 117.4425 21.6317  21.9682      0.0905 0.0790 0.1032     1.0087  0.9695  1.0540       0.9980        0.8138            0.1061     0.1557     0.0095           0.3297
+ RPf32_B1536  RPf32   1536.0  384 234.8731 16.2191  16.5543      0.0756 0.0670 0.0854     0.8429  0.8164  0.8692       0.0000        0.6229            0.0730     0.1445     0.0094           0.2487
+PCAf32_B1536 PCAf32   1536.0  384 234.8731 16.4265  16.9857      0.0874 0.0771 0.0992     0.9752  0.9402  1.0169       0.0015        0.7757            0.0942     0.1586     0.0095           0.3268
+
+--- out_full/confirm_B/hypotheses.csv  shape=(27, 10)
+                         id                          test  estimate   ci_lo  ci_hi  p_one_sided  excluded  p_holm               decision        label
+                  H1a[B=16]                  PCAf32-RPf32    0.0006  0.0001 0.0013       0.0010     False  0.0057              supported CONFIRMATORY
+                  H1a[B=32]                  PCAf32-RPf32    0.0011  0.0005 0.0019       0.0002     False  0.0057              supported CONFIRMATORY
+                  H1a[B=64]                  PCAf32-RPf32    0.0022  0.0014 0.0032       0.0002     False  0.0057              supported CONFIRMATORY
+                  H1a[B=96]                  PCAf32-RPf32    0.0019  0.0001 0.0036       0.0220     False  0.0440              supported CONFIRMATORY
+                 H1a[B=192]                  PCAf32-RPf32    0.0073  0.0049 0.0098       0.0002     False  0.0057              supported CONFIRMATORY
+                 H1a[B=384]                  PCAf32-RPf32    0.0100  0.0059 0.0138       0.0002     False  0.0057              supported CONFIRMATORY
+                 H1a[B=768]                  PCAf32-RPf32    0.0128  0.0088 0.0172       0.0002     False  0.0057              supported CONFIRMATORY
+                H1a[B=1536]                  PCAf32-RPf32    0.0118  0.0081 0.0161       0.0002     False  0.0057              supported CONFIRMATORY
+                  H1b[B=32]                 PCAsq8-PCAf32    0.0103  0.0082 0.0125       0.0002     False  0.0057              supported CONFIRMATORY
+                  H1b[B=64]                 PCAsq8-PCAf32    0.0232  0.0201 0.0264       0.0002     False  0.0057              supported CONFIRMATORY
+                  H1b[B=96]                 PCAsq8-PCAf32    0.0358  0.0320 0.0398       0.0002     False  0.0057              supported CONFIRMATORY
+                 H1b[B=192]                 PCAsq8-PCAf32    0.0509  0.0450 0.0576       0.0002     False  0.0057              supported CONFIRMATORY
+                 H1b[B=384]                 PCAsq8-PCAf32    0.0448  0.0362 0.0544       0.0002     False  0.0057              supported CONFIRMATORY
+                 H1b[B=768]                 PCAsq8-PCAf32    0.0194  0.0129 0.0266       0.0002     False  0.0057              supported CONFIRMATORY
+      H3a[contractnli>cuad]                 id_share diff    0.5741  0.5104 0.6341       0.0002     False  0.0057              supported CONFIRMATORY
+      H3a[contractnli>maud]                 id_share diff   -0.0160 -0.0843 0.0525       0.6803     False  0.6803          not supported CONFIRMATORY
+H3a[contractnli>privacy_qa]                 id_share diff    0.6378  0.4212 0.8508       0.0002      True     NaN excluded(few clusters) CONFIRMATORY
+           H3b[contractnli]            id_share(d=48)-raw    0.1404  0.0957 0.1890       0.0002     False  0.0057              supported CONFIRMATORY
+                  H3b[cuad]            id_share(d=48)-raw    0.5702  0.5386 0.6003       0.0002     False  0.0057              supported CONFIRMATORY
+                  H3b[maud]            id_share(d=48)-raw    0.0943  0.0565 0.1361       0.0002     False  0.0057              supported CONFIRMATORY
+            H3b[privacy_qa]            id_share(d=48)-raw    0.6360  0.4894 0.7916       0.0002      True     NaN excluded(few clusters) CONFIRMATORY
+            H4[contractnli]     xsrc_top1(RPf32 d=48)-raw    0.3959  0.3554 0.4366       0.0002     False  0.0057              supported CONFIRMATORY
+                   H4[cuad]     xsrc_top1(RPf32 d=48)-raw    0.3338  0.3212 0.3471       0.0002     False  0.0057              supported CONFIRMATORY
+                   H4[maud]     xsrc_top1(RPf32 d=48)-raw    0.2084  0.1941 0.2235       0.0002     False  0.0057              supported CONFIRMATORY
+             H4[privacy_qa]     xsrc_top1(RPf32 d=48)-raw    0.7177  0.6238 0.8115       0.0002      True     NaN excluded(few clusters) CONFIRMATORY
+                         H5 twostage_bm25_k3-global macro    0.0916  0.0790 0.1039       0.0002     False  0.0057              supported CONFIRMATORY
+                        H2b    upper CI of delta_R2 < thr    0.0039  0.0007 0.0107          NaN     False     NaN              supported CONFIRMATORY
+
+--- out_full/confirm_B/hypotheses_universal.csv  shape=(8, 5)
+ id  n_rows  n_pass  n_excluded      decision
+H1a       8       8           0     supported
+H1b       6       6           0     supported
+H1c       0       0           0      untested
+H3a       2       1           1 not supported
+H3b       3       3           1     supported
+ H4       3       3           1     supported
+ H5       1       1           0     supported
+H2b       1       1           0     supported
+
+--- out_full/confirm_B/margin_bins.csv  shape=(30, 4)
+            zbin         src   mean  count
+(-0.001, 0.0122] contractnli 0.8958     16
+(-0.001, 0.0122]        cuad 0.7883    159
+(-0.001, 0.0122]        maud 0.8889      9
+(0.0122, 0.0248] contractnli 0.8778     30
+(0.0122, 0.0248]        cuad 0.7642    147
+(0.0122, 0.0248]        maud 0.5714      7
+ (0.0248, 0.041] contractnli 0.7931     29
+ (0.0248, 0.041]        cuad 0.7603    146
+ (0.0248, 0.041]        maud 0.8148      9
+  (0.041, 0.059] contractnli 0.7564     26
+  (0.041, 0.059]        cuad 0.7397    146
+  (0.041, 0.059]        maud 0.8333     12
+ (0.059, 0.0831] contractnli 0.7586     29
+ (0.059, 0.0831]        cuad 0.6551    144
+ (0.059, 0.0831]        maud 0.7273     11
+ (0.0831, 0.112] contractnli 0.7051     26
+ (0.0831, 0.112]        cuad 0.6621    145
+ (0.0831, 0.112]        maud 0.7436     13
+  (0.112, 0.147] contractnli 0.6774     31
+  (0.112, 0.147]        cuad 0.5962    142
+  (0.112, 0.147]        maud 0.5455     11
+    (0.147, 0.2] contractnli 0.5507     23
+    (0.147, 0.2]        cuad 0.4743    149
+    (0.147, 0.2]        maud 0.5278     12
+    (0.2, 0.288] contractnli 0.4074     27
+    (0.2, 0.288]        cuad 0.2917    144
+    (0.2, 0.288]        maud 0.3590     13
+  (0.288, 1.611] contractnli 0.0580     23
+  (0.288, 1.611]        cuad 0.0822    146
+  (0.288, 1.611]        maud 0.0889     15
+
+--- out_full/confirm_B/margin_model.csv  shape=(1, 10)
+ n_rows  coef_z  p_z_one_sided  r2_z_only  r2_with_source  delta_r2  wald_source_p  dr2_lo  dr2_hi  dr2_nboot
+   1840 -9.8813            0.0     0.3003          0.3042    0.0039         0.0063  0.0007  0.0107        300
+
+--- out_full/confirm_B/matched_contrasts.csv  shape=(32, 10)
+     a      b    B   diff  ci_lo  ci_hi   p_gt  p_two  loso_min  loso_max
+PCAf32  RPf32   16 0.0006 0.0001 0.0013 0.0010 0.0020    0.0002    0.0009
+PCAf32  RPf32   32 0.0011 0.0005 0.0019 0.0002 0.0005    0.0006    0.0017
+PCAf32  RPf32   64 0.0022 0.0014 0.0032 0.0002 0.0005    0.0018    0.0029
+PCAf32  RPf32   96 0.0019 0.0001 0.0036 0.0220 0.0440    0.0003    0.0034
+PCAf32  RPf32  192 0.0073 0.0049 0.0098 0.0002 0.0005    0.0028    0.0106
+PCAf32  RPf32  384 0.0100 0.0059 0.0138 0.0002 0.0005    0.0031    0.0144
+PCAf32  RPf32  768 0.0128 0.0088 0.0172 0.0002 0.0005    0.0052    0.0184
+PCAf32  RPf32 1536 0.0118 0.0081 0.0161 0.0002 0.0005    0.0071    0.0177
+PCAsq8 PCAf32   16 0.0035 0.0025 0.0046 0.0002 0.0005    0.0016    0.0047
+PCAsq8 PCAf32   32 0.0103 0.0082 0.0125 0.0002 0.0005    0.0041    0.0143
+PCAsq8 PCAf32   64 0.0232 0.0201 0.0264 0.0002 0.0005    0.0082    0.0335
+PCAsq8 PCAf32   96 0.0358 0.0320 0.0398 0.0002 0.0005    0.0133    0.0519
+PCAsq8 PCAf32  192 0.0509 0.0450 0.0576 0.0002 0.0005    0.0262    0.0732
+PCAsq8 PCAf32  384 0.0448 0.0362 0.0544 0.0002 0.0005    0.0344    0.0653
+PCAsq8 PCAf32  768 0.0194 0.0129 0.0266 0.0002 0.0005    0.0056    0.0288
+ RPsq8  RPf32   16 0.0018 0.0014 0.0023 0.0002 0.0005    0.0006    0.0026
+ RPsq8  RPf32   32 0.0063 0.0051 0.0076 0.0002 0.0005    0.0037    0.0090
+ RPsq8  RPf32   64 0.0200 0.0166 0.0242 0.0002 0.0005    0.0088    0.0290
+ RPsq8  RPf32   96 0.0278 0.0244 0.0319 0.0002 0.0005    0.0109    0.0397
+ RPsq8  RPf32  192 0.0456 0.0396 0.0523 0.0002 0.0005    0.0240    0.0658
+ RPsq8  RPf32  384 0.0430 0.0375 0.0490 0.0002 0.0005    0.0273    0.0622
+ RPsq8  RPf32  768 0.0231 0.0197 0.0266 0.0002 0.0005    0.0151    0.0336
+    PQ PCAsq8   16 0.0057 0.0038 0.0076 0.0002 0.0005   -0.0001    0.0088
+    PQ PCAsq8   32 0.0101 0.0072 0.0130 0.0002 0.0005   -0.0007    0.0158
+    PQ PCAsq8   64 0.0120 0.0082 0.0161 0.0002 0.0005    0.0000    0.0183
+PCAsq8  RPf32   16 0.0041 0.0031 0.0053 0.0002 0.0005    0.0024    0.0057
+PCAsq8  RPf32   32 0.0114 0.0093 0.0137 0.0002 0.0005    0.0053    0.0160
+PCAsq8  RPf32   64 0.0255 0.0223 0.0287 0.0002 0.0005    0.0100    0.0364
+PCAsq8  RPf32   96 0.0377 0.0339 0.0416 0.0002 0.0005    0.0136    0.0540
+PCAsq8  RPf32  192 0.0583 0.0521 0.0654 0.0002 0.0005    0.0290    0.0839
+PCAsq8  RPf32  384 0.0548 0.0474 0.0630 0.0002 0.0005    0.0377    0.0797
+PCAsq8  RPf32  768 0.0323 0.0259 0.0397 0.0002 0.0005    0.0205    0.0473
+
+--- out_full/confirm_B/pools_and_twostage.csv  shape=(26, 7)
+        rep        mode  contractnli   cuad   maud  privacy_qa  macro
+        raw      global       0.0876 0.1713 0.0101      0.3175 0.0897
+        raw       typed       0.1207 0.1743 0.0101      0.3181 0.1017
+        raw      oracle       0.5597 0.2343 0.0723      0.4009 0.2888
+        raw ts_dense_k1       0.1210 0.2246 0.0215      0.3590 0.1224
+        raw ts_dense_k3       0.1154 0.1909 0.0173      0.3243 0.1079
+        raw ts_dense_k5       0.1070 0.1793 0.0146      0.3159 0.1003
+        raw  ts_bm25_k1       0.3582 0.2284 0.0716      0.2745 0.2194
+        raw  ts_bm25_k3       0.2898 0.2070 0.0469      0.2909 0.1812
+        raw  ts_bm25_k5       0.2526 0.2014 0.0367      0.2786 0.1636
+        raw   ts_rrf_k1       0.2316 0.2288 0.0368      0.3122 0.1657
+        raw   ts_rrf_k3       0.1861 0.1960 0.0270      0.3044 0.1364
+        raw   ts_rrf_k5       0.1637 0.1867 0.0214      0.2980 0.1239
+        raw        xsrc       0.3920 0.0112 0.0030      0.0000 0.1354
+PCAsq8_B192      global       0.0585 0.1449 0.0090      0.2676 0.0708
+PCAsq8_B192       typed       0.0921 0.1462 0.0091      0.2701 0.0825
+PCAsq8_B192      oracle       0.5851 0.2452 0.0787      0.3600 0.3030
+PCAsq8_B192 ts_dense_k1       0.0821 0.2162 0.0117      0.3266 0.1033
+PCAsq8_B192 ts_dense_k3       0.0785 0.1723 0.0107      0.2801 0.0872
+PCAsq8_B192 ts_dense_k5       0.0747 0.1563 0.0102      0.2712 0.0804
+PCAsq8_B192  ts_bm25_k1       0.3793 0.2398 0.0780      0.2551 0.2324
+PCAsq8_B192  ts_bm25_k3       0.2902 0.2092 0.0486      0.2607 0.1827
+PCAsq8_B192  ts_bm25_k5       0.2440 0.1999 0.0381      0.2567 0.1607
+PCAsq8_B192   ts_rrf_k1       0.2077 0.2376 0.0305      0.2828 0.1586
+PCAsq8_B192   ts_rrf_k3       0.1716 0.1862 0.0221      0.2669 0.1266
+PCAsq8_B192   ts_rrf_k5       0.1448 0.1740 0.0194      0.2607 0.1128
+PCAsq8_B192        xsrc       0.5353 0.0149 0.0341      0.0000 0.1947
+
+--- out_full/confirm_B/typed_vs_xsrc.csv  shape=(180, 10)
+      rep      source  ndcg_global  ndcg_typed  typed_gain  gain_lo  gain_hi  xsrc_top1   x_lo   x_hi
+      raw contractnli       0.0876      0.1206      0.0330   0.0255   0.0418     0.3918 0.3495 0.4327
+      raw        cuad       0.1713      0.1743      0.0030   0.0022   0.0039     0.0111 0.0080 0.0143
+      raw        maud       0.0101      0.0102      0.0000   0.0000   0.0001     0.0030 0.0006 0.0060
+      raw  privacy_qa       0.3145      0.3150      0.0005   0.0000   0.0017     0.0000 0.0000 0.0000
+      raw       macro       0.0897      0.1017      0.0120   0.0095   0.0149     0.1353 0.1209 0.1490
+RPf32_B16 contractnli       0.0001      0.0043      0.0043   0.0029   0.0057     0.9847 0.9798 0.9891
+RPf32_B16        cuad       0.0001      0.0004      0.0003   0.0001   0.0006     0.6865 0.6779 0.6954
+RPf32_B16        maud       0.0000      0.0000      0.0000   0.0000   0.0001     0.3504 0.3364 0.3639
+
+--- out_full/explore_A/ann_layer.csv  shape=(15, 10)
+        rep index      param  ndcg_macro  ratio_to_flat   r_lo   r_hi  overlap10  lat_ms  mem_mib
+        raw  Flat          -      0.0888         1.0000 1.0000 1.0000     1.0000 32.6649 469.7461
+        raw   IVF   nprobe=8      0.0753         0.8499 0.8034 0.8900     0.6718  0.3026 473.9773
+        raw   IVF  nprobe=32      0.0851         0.9536 0.9181 0.9779     0.8388  1.1179 473.9773
+        raw   IVF nprobe=128      0.0880         0.9925 0.9847 0.9995     0.9492  4.1393 473.9773
+        raw  HNSW     efS=64      0.0839         0.8971 0.8313 0.9484     0.8942  0.1915 511.3668
+PCAf32_B768  Flat          -      0.0725         1.0000 1.0000 1.0000     1.0000  8.0624 117.4366
+PCAf32_B768   IVF   nprobe=8      0.0578         0.8075 0.7593 0.8510     0.7193  0.0823 119.4178
+PCAf32_B768   IVF  nprobe=32      0.0677         0.9492 0.9293 0.9668     0.8905  0.2793 119.4178
+PCAf32_B768   IVF nprobe=128      0.0711         0.9855 0.9778 0.9926     0.9780  0.9227 119.4178
+PCAf32_B768  HNSW     efS=64      0.0708         0.9638 0.9353 0.9862     0.9506  0.1077 159.0572
+ RPf32_B768  Flat          -      0.0636         1.0000 1.0000 1.0000     1.0000  8.5667 117.4366
+ RPf32_B768   IVF   nprobe=8      0.0498         0.7654 0.7116 0.8161     0.6300  0.0715 119.4178
+ RPf32_B768   IVF  nprobe=32      0.0582         0.9166 0.8808 0.9460     0.8389  0.2452 119.4178
+ RPf32_B768   IVF nprobe=128      0.0619         0.9773 0.9658 0.9872     0.9644  0.8670 119.4178
+ RPf32_B768  HNSW     efS=64      0.0621         0.9590 0.9328 0.9802     0.9051  0.0946 159.0572
+
+--- out_full/explore_A/bm25_vs_dense.csv  shape=(15, 4)
+    rep      source   ndcg  dochit
+    raw contractnli 0.0815  0.5844
+    raw        cuad 0.1159  0.9993
+    raw        maud 0.0077  0.9247
+    raw  privacy_qa 0.2629  1.0000
+    raw       macro 0.0684  0.8361
+   BM25 contractnli 0.0628  0.4862
+   BM25        cuad 0.0442  0.9998
+   BM25        maud 0.0056  1.0000
+   BM25  privacy_qa 0.1032  0.9583
+   BM25       macro 0.0375  0.8286
+BM25_sw contractnli 0.0661  0.4770
+BM25_sw        cuad 0.0600  1.0000
+BM25_sw        maud 0.0061  0.9958
+BM25_sw  privacy_qa 0.1108  0.9219
+BM25_sw       macro 0.0441  0.8243
+
+--- out_full/explore_A/decomposition.csv  shape=(68, 13)
+      rep   d      source  ndcg_global  ndcg_oracle  id_share  id_lo  id_hi  loss_total  loss_localization  loss_identification  lid_lo  lid_hi
+      raw 768 contractnli       0.0817       0.4887    0.8330 0.7773 0.8836      0.0000             0.0000               0.0000  0.0000  0.0000
+      raw 768        cuad       0.1160       0.1676    0.3082 0.2712 0.3471      0.0000             0.0000               0.0000  0.0000  0.0000
+      raw 768        maud       0.0077       0.0423    0.8170 0.7600 0.8668      0.0000             0.0000               0.0000  0.0000  0.0000
+      raw 768  privacy_qa       0.2587       0.3554    0.2675 0.0715 0.4759      0.0000             0.0000               0.0000  0.0000  0.0000
+RPf32_B16   4 contractnli       0.0003       0.3481    0.9992 0.9981 1.0000      0.0814             0.1406              -0.0592 -0.0909 -0.0278
+RPf32_B16   4        cuad       0.0001       0.0950    0.9990 0.9979 0.9998      0.1159             0.0727               0.0432  0.0358  0.0504
+RPf32_B16   4        maud       0.0000       0.0119    1.0000 1.0000 1.0000      0.0077             0.0303              -0.0226 -0.0276 -0.0178
+RPf32_B16   4  privacy_qa       0.0003       0.2260    0.9986 0.9957 1.0000      0.2584             0.1294               0.1289  0.0449  0.1788
+
+--- out_full/explore_A/fragility_importance.csv  shape=(36, 3)
+        rep         feature  perm_importance_auc
+PCAf32_B384            qlen              -0.0009
+PCAf32_B384      id_density               0.0084
+PCAf32_B384         overlap              -0.0015
+PCAf32_B384  log_doc_chunks               0.0115
+PCAf32_B384      log_n_gold               0.0083
+PCAf32_B384          margin               0.0547
+PCAf32_B384          s_gold               0.1756
+PCAf32_B384   comp_same_doc               0.0003
+PCAf32_B384 src_contractnli               0.0154
+PCAf32_B384        src_cuad               0.0002
+PCAf32_B384        src_maud               0.0000
+PCAf32_B384  src_privacy_qa               0.0027
+ RPf32_B384            qlen               0.0018
+ RPf32_B384      id_density               0.0069
+ RPf32_B384         overlap               0.0020
+ RPf32_B384  log_doc_chunks               0.0012
+ RPf32_B384      log_n_gold               0.0065
+ RPf32_B384          margin               0.0118
+ RPf32_B384          s_gold               0.3020
+ RPf32_B384   comp_same_doc               0.0004
+ RPf32_B384 src_contractnli               0.0175
+ RPf32_B384        src_cuad              -0.0002
+ RPf32_B384        src_maud               0.0002
+ RPf32_B384  src_privacy_qa               0.0002
+     PQ_B32            qlen               0.0021
+     PQ_B32      id_density               0.0014
+     PQ_B32         overlap              -0.0015
+     PQ_B32  log_doc_chunks              -0.0010
+     PQ_B32      log_n_gold               0.0171
+     PQ_B32          margin               0.0280
+     PQ_B32          s_gold               0.1158
+     PQ_B32   comp_same_doc              -0.0008
+     PQ_B32 src_contractnli               0.0834
+     PQ_B32        src_cuad               0.0027
+     PQ_B32        src_maud               0.0008
+     PQ_B32  src_privacy_qa               0.0001
+
+--- out_full/explore_A/fragility_ml.csv  shape=(6, 7)
+        rep     model    n  pos_rate    auc  auc_sd  brier
+PCAf32_B384       hgb 1716    0.4685 0.8131  0.0286 0.1769
+PCAf32_B384 lr_margin 1716    0.4685 0.7581  0.0351 0.2163
+ RPf32_B384       hgb 1716    0.5274 0.8529  0.0263 0.1539
+ RPf32_B384 lr_margin 1716    0.5274 0.7525  0.0331 0.2178
+     PQ_B32       hgb 1716    0.5379 0.7625  0.0208 0.1988
+     PQ_B32 lr_margin 1716    0.5379 0.6586  0.0426 0.2364
+
+--- out_full/explore_A/frontier.csv  shape=(38, 19)
+        name    fam  B_bytes   d  mem_mib  lat_ms  lat_p95  ndcg_macro     lo     hi  retention  ret_lo  ret_hi  pareto_prob  dochit_macro  ndcg_contractnli  ndcg_cuad  ndcg_maud  ndcg_privacy_qa
+         raw    raw      NaN 768 469.7461 32.7049  34.4322      0.0684 0.0593 0.0787     1.0000  1.0000  1.0000       0.1348        0.8361            0.0815     0.1159     0.0077           0.2629
+   RPf32_B16  RPf32     16.0   4   2.4466  1.1455   1.3129      0.0001 0.0000 0.0003     0.0018  0.0004  0.0039       0.0275        0.0249            0.0003     0.0001     0.0000           0.0003
+  PCAf32_B16 PCAf32     16.0   4   2.4466  0.9931   1.3126      0.0005 0.0001 0.0009     0.0067  0.0021  0.0132       0.9725        0.0321            0.0005     0.0008     0.0001           0.0008
+   RPsq8_B16  RPsq8     16.0  16   2.4468  1.4325   1.4740      0.0019 0.0013 0.0026     0.0276  0.0204  0.0365       0.0062        0.1290            0.0018     0.0034     0.0004           0.0179
+  PCAsq8_B16 PCAsq8     16.0  16   2.4468  0.7215   1.1784      0.0032 0.0023 0.0043     0.0469  0.0342  0.0609       0.9938        0.1203            0.0034     0.0053     0.0010           0.0611
+      PQ_B16     PQ     16.0 768   3.1967  1.2299   2.6734      0.0124 0.0106 0.0143     0.1815  0.1487  0.2187       1.0000        0.2622            0.0043     0.0314     0.0015           0.1154
+   RPf32_B32  RPf32     32.0   8   4.8932  1.1339   1.2233      0.0008 0.0005 0.0013     0.0119  0.0068  0.0185       0.0000        0.0459            0.0013     0.0010     0.0001           0.0082
+  PCAf32_B32 PCAf32     32.0   8   4.8932  0.7823   4.4005      0.0006 0.0003 0.0009     0.0082  0.0041  0.0132       0.0000        0.0514            0.0005     0.0012     0.0000           0.0238
+   RPsq8_B32  RPsq8     32.0  32   4.8935  0.9757   1.4982      0.0131 0.0100 0.0175     0.1912  0.1530  0.2395       0.5850        0.3158            0.0163     0.0215     0.0015           0.0899
+  PCAsq8_B32 PCAsq8     32.0  32   4.8935  1.8108   1.8554      0.0110 0.0086 0.0141     0.1611  0.1282  0.1947       0.0392        0.2831            0.0123     0.0183     0.0023           0.1199
+      PQ_B32     PQ     32.0 768   5.6433  2.1153   3.1980      0.0243 0.0217 0.0270     0.3572  0.3057  0.4111       1.0000        0.4415            0.0043     0.0652     0.0034           0.1626
+   RPf32_B64  RPf32     64.0  16   9.7864  1.3936   1.6197      0.0019 0.0014 0.0026     0.0276  0.0205  0.0363       0.0000        0.1284            0.0018     0.0035     0.0004           0.0181
+  PCAf32_B64 PCAf32     64.0  16   9.7864  1.0614   1.3754      0.0031 0.0023 0.0042     0.0458  0.0338  0.0589       0.0000        0.1210            0.0032     0.0051     0.0010           0.0627
+   RPsq8_B64  RPsq8     64.0  64   9.7869  1.6082   2.2309      0.0267 0.0230 0.0310     0.3905  0.3560  0.4240       0.8770        0.5678            0.0295     0.0478     0.0028           0.1400
+  PCAsq8_B64 PCAsq8     64.0  64   9.7869  1.6098   1.8791      0.0233 0.0191 0.0285     0.3411  0.2919  0.3918       0.0222        0.5149            0.0244     0.0421     0.0034           0.1725
+      PQ_B64     PQ     64.0 768  10.5365  3.8658   8.2791      0.0453 0.0401 0.0519     0.6638  0.6017  0.7267       1.0000        0.6607            0.0327     0.0976     0.0055           0.2128
+   RPf32_B96  RPf32     96.0  24  14.6796  1.0926   1.6931      0.0058 0.0043 0.0077     0.0849  0.0665  0.1071       0.0000        0.2309            0.0074     0.0096     0.0004           0.0387
+  PCAf32_B96 PCAf32     96.0  24  14.6796  1.6264   1.8941      0.0069 0.0052 0.0090     0.1010  0.0774  0.1262       0.0000        0.2126            0.0068     0.0121     0.0018           0.1011
+   RPsq8_B96  RPsq8     96.0  96  14.6804  2.4112   2.8933      0.0358 0.0304 0.0423     0.5225  0.4788  0.5684       0.0000        0.6392            0.0374     0.0661     0.0038           0.1804
+  PCAsq8_B96 PCAsq8     96.0  96  14.6804  3.7620   3.8608      0.0357 0.0302 0.0423     0.5219  0.4672  0.5740       0.0000        0.6482            0.0383     0.0641     0.0047           0.2116
+      PQ_B96     PQ     96.0 768  15.4296  6.9050   7.0533      0.0532 0.0465 0.0608     0.7784  0.7290  0.8245       0.9998        0.7425            0.0504     0.1032     0.0060           0.2276
+  RPf32_B192  RPf32    192.0  48  29.3592  2.1899   2.5299      0.0178 0.0148 0.0213     0.2599  0.2302  0.2904       0.0000        0.5078            0.0186     0.0328     0.0019           0.1234
+ PCAf32_B192 PCAf32    192.0  48  29.3592  1.8878   2.3110      0.0172 0.0137 0.0216     0.2521  0.2101  0.2968       0.0000        0.4107            0.0200     0.0287     0.0030           0.1547
+  RPsq8_B192  RPsq8    192.0 192  29.3607  5.2441   6.0636      0.0506 0.0436 0.0585     0.7394  0.6993  0.7801       0.0018        0.7591            0.0568     0.0890     0.0059           0.2243
+ PCAsq8_B192 PCAsq8    192.0 192  29.3607  5.0249   5.3816      0.0546 0.0470 0.0633     0.7978  0.7556  0.8379       0.7540        0.7944            0.0630     0.0942     0.0065           0.2392
+     PQ_B192     PQ    192.0 768  30.1092 18.2838  19.5215      0.0635 0.0551 0.0732     0.9293  0.8949  0.9606       1.0000        0.8155            0.0712     0.1121     0.0072           0.2389
+  RPf32_B384  RPf32    384.0  96  58.7183  3.7916   3.9625      0.0359 0.0305 0.0425     0.5247  0.4809  0.5708       0.0000        0.6393            0.0378     0.0662     0.0037           0.1806
+ PCAf32_B384 PCAf32    384.0  96  58.7183  3.8990   4.0549      0.0358 0.0303 0.0424     0.5233  0.4688  0.5761       0.0000        0.6490            0.0383     0.0643     0.0048           0.2108
+  RPsq8_B384  RPsq8    384.0 384  58.7213 10.8912  11.1717      0.0589 0.0510 0.0682     0.8615  0.8331  0.8891       0.0000        0.8095            0.0679     0.1024     0.0065           0.2418
+ PCAsq8_B384 PCAsq8    384.0 384  58.7213 10.8167  15.2941      0.0659 0.0567 0.0765     0.9644  0.9372  0.9912       0.9440        0.8476            0.0838     0.1071     0.0070           0.2640
+     PQ_B384     PQ    384.0 768  59.4683 42.3283  55.9166      0.0679 0.0590 0.0781     0.9932  0.9816  1.0047       0.9688        0.8364            0.0803     0.1157     0.0077           0.2636
+  RPf32_B768  RPf32    768.0 192 117.4366  8.0955  10.7903      0.0505 0.0435 0.0585     0.7390  0.6994  0.7795       0.0000        0.7588            0.0568     0.0890     0.0058           0.2236
+ PCAf32_B768 PCAf32    768.0 192 117.4366  8.0036  11.0225      0.0546 0.0470 0.0633     0.7977  0.7555  0.8372       0.0000        0.7944            0.0630     0.0942     0.0065           0.2397
+  RPsq8_B768  RPsq8    768.0 768 117.4425 21.5520  29.7395      0.0633 0.0551 0.0727     0.9262  0.9039  0.9496       0.0000        0.8235            0.0746     0.1081     0.0072           0.2504
+ PCAsq8_B768 PCAsq8    768.0 768 117.4425 20.9669  22.9066      0.0671 0.0576 0.0779     0.9817  0.9529  1.0099       0.2428        0.8557            0.0867     0.1074     0.0073           0.2619
+     PQ_B768     PQ    768.0 768 118.1866 97.3725 122.7667      0.0685 0.0594 0.0788     1.0025  0.9979  1.0079       0.8790        0.8357            0.0820     0.1159     0.0076           0.2632
+ RPf32_B1536  RPf32   1536.0 384 234.8731 16.3872  19.6909      0.0590 0.0510 0.0683     0.8629  0.8341  0.8908       0.0000        0.8090            0.0682     0.1023     0.0065           0.2421
+PCAf32_B1536 PCAf32   1536.0 384 234.8731 16.7228  20.5709      0.0660 0.0569 0.0765     0.9657  0.9385  0.9926       0.0000        0.8482            0.0839     0.1071     0.0070           0.2643
+
+--- out_full/explore_A/hypotheses.csv  shape=(27, 10)
+                         id                          test  estimate   ci_lo  ci_hi  p_one_sided  excluded  p_holm               decision       label
+                  H1a[B=16]                  PCAf32-RPf32    0.0003 -0.0000 0.0008       0.0277     False  0.1665          not supported EXPLORATORY
+                  H1a[B=32]                  PCAf32-RPf32   -0.0003 -0.0008 0.0002       0.8358     False  1.0000          not supported EXPLORATORY
+                  H1a[B=64]                  PCAf32-RPf32    0.0012  0.0002 0.0023       0.0085     False  0.0595          not supported EXPLORATORY
+                  H1a[B=96]                  PCAf32-RPf32    0.0011 -0.0012 0.0034       0.1782     False  0.8910          not supported EXPLORATORY
+                 H1a[B=192]                  PCAf32-RPf32   -0.0005 -0.0039 0.0029       0.6193     False  1.0000          not supported EXPLORATORY
+                 H1a[B=384]                  PCAf32-RPf32   -0.0001 -0.0040 0.0038       0.5131     False  1.0000          not supported EXPLORATORY
+                 H1a[B=768]                  PCAf32-RPf32    0.0040  0.0010 0.0074       0.0052     False  0.0420              supported EXPLORATORY
+                H1a[B=1536]                  PCAf32-RPf32    0.0070  0.0043 0.0102       0.0002     False  0.0057              supported EXPLORATORY
+                  H1b[B=32]                 PCAsq8-PCAf32    0.0104  0.0080 0.0135       0.0002     False  0.0057              supported EXPLORATORY
+                  H1b[B=64]                 PCAsq8-PCAf32    0.0202  0.0165 0.0247       0.0002     False  0.0057              supported EXPLORATORY
+                  H1b[B=96]                 PCAsq8-PCAf32    0.0288  0.0243 0.0339       0.0002     False  0.0057              supported EXPLORATORY
+                 H1b[B=192]                 PCAsq8-PCAf32    0.0373  0.0317 0.0436       0.0002     False  0.0057              supported EXPLORATORY
+                 H1b[B=384]                 PCAsq8-PCAf32    0.0302  0.0242 0.0369       0.0002     False  0.0057              supported EXPLORATORY
+                 H1b[B=768]                 PCAsq8-PCAf32    0.0126  0.0091 0.0166       0.0002     False  0.0057              supported EXPLORATORY
+      H3a[contractnli>cuad]                 id_share diff    0.5248  0.4581 0.5881       0.0002     False  0.0057              supported EXPLORATORY
+      H3a[contractnli>maud]                 id_share diff    0.0160 -0.0630 0.0926       0.3374     False  1.0000          not supported EXPLORATORY
+H3a[contractnli>privacy_qa]                 id_share diff    0.5654  0.3507 0.7781       0.0002      True     NaN excluded(few clusters) EXPLORATORY
+           H3b[contractnli]            id_share(d=48)-raw    0.1202  0.0831 0.1603       0.0002     False  0.0057              supported EXPLORATORY
+                  H3b[cuad]            id_share(d=48)-raw    0.4400  0.4079 0.4703       0.0002     False  0.0057              supported EXPLORATORY
+                  H3b[maud]            id_share(d=48)-raw    0.0979  0.0547 0.1448       0.0002     False  0.0057              supported EXPLORATORY
+            H3b[privacy_qa]            id_share(d=48)-raw    0.3421  0.2163 0.4481       0.0002      True     NaN excluded(few clusters) EXPLORATORY
+            H4[contractnli]     xsrc_top1(RPf32 d=48)-raw    0.3762  0.3350 0.4187       0.0002     False  0.0057              supported EXPLORATORY
+                   H4[cuad]     xsrc_top1(RPf32 d=48)-raw    0.1851  0.1709 0.1990       0.0002     False  0.0057              supported EXPLORATORY
+                   H4[maud]     xsrc_top1(RPf32 d=48)-raw    0.1647  0.1483 0.1817       0.0002     False  0.0057              supported EXPLORATORY
+             H4[privacy_qa]     xsrc_top1(RPf32 d=48)-raw    0.3319  0.1444 0.5212       0.0002      True     NaN excluded(few clusters) EXPLORATORY
+                         H5 twostage_bm25_k3-global macro    0.0684  0.0579 0.0785       0.0002     False  0.0057              supported EXPLORATORY
+                        H2b    upper CI of delta_R2 < thr    0.0068  0.0002 0.0276          NaN     False     NaN           inconclusive EXPLORATORY
+
+--- out_full/explore_A/hypotheses_universal.csv  shape=(8, 5)
+ id  n_rows  n_pass  n_excluded      decision
+H1a       8       2           0 not supported
+H1b       6       6           0     supported
+H1c       0       0           0      untested
+H3a       2       1           1 not supported
+H3b       3       3           1     supported
+ H4       3       3           1     supported
+ H5       1       1           0     supported
+H2b       1       0           0  inconclusive
+
+--- out_full/explore_A/margin_bins.csv  shape=(20, 4)
+                             zbin         src   mean  count
+(-0.00045700000000000005, 0.0291] contractnli 0.8586     33
+(-0.00045700000000000005, 0.0291]        cuad 0.7231     65
+                 (0.0291, 0.0584] contractnli 0.8333     24
+                 (0.0291, 0.0584]        cuad 0.7297     74
+                 (0.0584, 0.0901] contractnli 0.7500     28
+                 (0.0584, 0.0901]        cuad 0.7150     69
+                  (0.0901, 0.128] contractnli 0.7222     24
+                  (0.0901, 0.128]        cuad 0.7027     74
+                   (0.128, 0.172] contractnli 0.7051     26
+                   (0.128, 0.172]        cuad 0.5915     71
+                   (0.172, 0.219] contractnli 0.5139     24
+                   (0.172, 0.219]        cuad 0.5676     74
+                   (0.219, 0.291] contractnli 0.5208     16
+                   (0.219, 0.291]        cuad 0.4733     81
+                   (0.291, 0.398] contractnli 0.4912     19
+                   (0.291, 0.398]        cuad 0.3122     79
+                   (0.398, 0.602] contractnli 0.2576     22
+                   (0.398, 0.602]        cuad 0.1644     75
+                   (0.602, 3.614] contractnli 0.1333     20
+                   (0.602, 3.614]        cuad 0.0299     78
+
+--- out_full/explore_A/margin_model.csv  shape=(1, 10)
+ n_rows  coef_z  p_z_one_sided  r2_z_only  r2_with_source  delta_r2  wald_source_p  dr2_lo  dr2_hi  dr2_nboot
+    976 -5.5951            0.0     0.3409          0.3477    0.0068         0.0643  0.0002  0.0276        300
+
+--- out_full/explore_A/matched_contrasts.csv  shape=(36, 10)
+     a      b    B    diff   ci_lo  ci_hi   p_gt  p_two  loso_min  loso_max
+PCAf32  RPf32   16  0.0003 -0.0000 0.0008 0.0277 0.0555    0.0001    0.0005
+PCAf32  RPf32   32 -0.0003 -0.0008 0.0002 0.8358 0.3289   -0.0005    0.0000
+PCAf32  RPf32   64  0.0012  0.0002 0.0023 0.0085 0.0170    0.0011    0.0015
+PCAf32  RPf32   96  0.0011 -0.0012 0.0034 0.1782 0.3564    0.0004    0.0019
+PCAf32  RPf32  192 -0.0005 -0.0039 0.0029 0.6193 0.7618   -0.0015    0.0012
+PCAf32  RPf32  384 -0.0001 -0.0040 0.0038 0.5131 0.9743   -0.0007    0.0008
+PCAf32  RPf32  768  0.0040  0.0010 0.0074 0.0052 0.0105    0.0030    0.0057
+PCAf32  RPf32 1536  0.0070  0.0043 0.0102 0.0002 0.0005    0.0027    0.0103
+PCAsq8 PCAf32   16  0.0027  0.0018 0.0039 0.0002 0.0005    0.0019    0.0037
+PCAsq8 PCAf32   32  0.0104  0.0080 0.0135 0.0002 0.0005    0.0071    0.0145
+PCAsq8 PCAf32   64  0.0202  0.0165 0.0247 0.0002 0.0005    0.0118    0.0291
+PCAsq8 PCAf32   96  0.0288  0.0243 0.0339 0.0002 0.0005    0.0172    0.0417
+PCAsq8 PCAf32  192  0.0373  0.0317 0.0436 0.0002 0.0005    0.0233    0.0542
+PCAsq8 PCAf32  384  0.0302  0.0242 0.0369 0.0002 0.0005    0.0225    0.0441
+PCAsq8 PCAf32  768  0.0126  0.0091 0.0166 0.0002 0.0005    0.0070    0.0184
+ RPsq8  RPf32   16  0.0018  0.0012 0.0025 0.0002 0.0005    0.0010    0.0025
+ RPsq8  RPf32   32  0.0123  0.0091 0.0167 0.0002 0.0005    0.0082    0.0177
+ RPsq8  RPf32   64  0.0248  0.0213 0.0289 0.0002 0.0005    0.0151    0.0360
+ RPsq8  RPf32   96  0.0299  0.0255 0.0355 0.0002 0.0005    0.0167    0.0432
+ RPsq8  RPf32  192  0.0328  0.0280 0.0381 0.0002 0.0005    0.0211    0.0472
+ RPsq8  RPf32  384  0.0230  0.0191 0.0274 0.0002 0.0005    0.0164    0.0331
+ RPsq8  RPf32  768  0.0128  0.0097 0.0161 0.0002 0.0005    0.0096    0.0185
+    PQ PCAsq8   16  0.0092  0.0072 0.0112 0.0002 0.0005    0.0007    0.0135
+    PQ PCAsq8   32  0.0133  0.0099 0.0163 0.0002 0.0005   -0.0035    0.0240
+    PQ PCAsq8   64  0.0220  0.0178 0.0263 0.0002 0.0005    0.0052    0.0319
+    PQ PCAsq8   96  0.0175  0.0130 0.0222 0.0002 0.0005    0.0067    0.0256
+    PQ PCAsq8  192  0.0089  0.0055 0.0127 0.0002 0.0005    0.0044    0.0131
+    PQ PCAsq8  384  0.0019 -0.0001 0.0039 0.0315 0.0630   -0.0014    0.0047
+    PQ PCAsq8  768  0.0014 -0.0005 0.0033 0.0742 0.1485   -0.0022    0.0044
+PCAsq8  RPf32   16  0.0031  0.0021 0.0042 0.0002 0.0005    0.0020    0.0041
+PCAsq8  RPf32   32  0.0102  0.0078 0.0131 0.0002 0.0005    0.0066    0.0142
+PCAsq8  RPf32   64  0.0214  0.0174 0.0264 0.0002 0.0005    0.0128    0.0306
+PCAsq8  RPf32   96  0.0299  0.0247 0.0361 0.0002 0.0005    0.0176    0.0427
+PCAsq8  RPf32  192  0.0368  0.0312 0.0432 0.0002 0.0005    0.0245    0.0529
+PCAsq8  RPf32  384  0.0300  0.0244 0.0366 0.0002 0.0005    0.0221    0.0434
+PCAsq8  RPf32  768  0.0166  0.0125 0.0211 0.0002 0.0005    0.0100    0.0242
+
+--- out_full/explore_A/pools_and_twostage.csv  shape=(26, 7)
+        rep        mode  contractnli   cuad   maud  privacy_qa  macro
+        raw      global       0.0815 0.1159 0.0077      0.2629 0.0684
+        raw       typed       0.0994 0.1174 0.0077      0.2654 0.0748
+        raw      oracle       0.4884 0.1674 0.0423      0.3571 0.2327
+        raw ts_dense_k1       0.1764 0.1624 0.0247      0.3185 0.1212
+        raw ts_dense_k3       0.1346 0.1269 0.0154      0.2689 0.0923
+        raw ts_dense_k5       0.1114 0.1196 0.0113      0.2636 0.0808
+        raw  ts_bm25_k1       0.3165 0.1634 0.0419      0.2507 0.1739
+        raw  ts_bm25_k3       0.2403 0.1408 0.0291      0.2522 0.1367
+        raw  ts_bm25_k5       0.2084 0.1362 0.0238      0.2494 0.1228
+        raw   ts_rrf_k1       0.2628 0.1639 0.0297      0.2825 0.1521
+        raw   ts_rrf_k3       0.1712 0.1319 0.0195      0.2519 0.1075
+        raw   ts_rrf_k5       0.1447 0.1262 0.0148      0.2560 0.0952
+        raw        xsrc       0.3101 0.0007 0.0000      0.0052 0.1036
+PCAsq8_B192      global       0.0630 0.0942 0.0065      0.2392 0.0546
+PCAsq8_B192       typed       0.0845 0.0944 0.0067      0.2402 0.0619
+PCAsq8_B192      oracle       0.5097 0.1632 0.0462      0.3359 0.2397
+PCAsq8_B192 ts_dense_k1       0.1297 0.1543 0.0185      0.2872 0.1008
+PCAsq8_B192 ts_dense_k3       0.1006 0.1102 0.0125      0.2437 0.0744
+PCAsq8_B192 ts_dense_k5       0.0852 0.0992 0.0099      0.2385 0.0647
+PCAsq8_B192  ts_bm25_k1       0.3323 0.1594 0.0458      0.2368 0.1792
+PCAsq8_B192  ts_bm25_k3       0.2519 0.1338 0.0300      0.2387 0.1386
+PCAsq8_B192  ts_bm25_k5       0.2096 0.1277 0.0239      0.2370 0.1204
+PCAsq8_B192   ts_rrf_k1       0.2411 0.1595 0.0284      0.2697 0.1430
+PCAsq8_B192   ts_rrf_k3       0.1611 0.1195 0.0171      0.2347 0.0992
+PCAsq8_B192   ts_rrf_k5       0.1323 0.1116 0.0143      0.2351 0.0861
+PCAsq8_B192        xsrc       0.4575 0.0007 0.0102      0.0000 0.1561
+
+--- out_full/explore_A/typed_vs_xsrc.csv  shape=(200, 10)
+      rep      source  ndcg_global  ndcg_typed  typed_gain  gain_lo  gain_hi  xsrc_top1   x_lo   x_hi
+      raw contractnli       0.0817      0.0996      0.0179   0.0135   0.0226     0.3106 0.2615 0.3618
+      raw        cuad       0.1160      0.1175      0.0015   0.0010   0.0021     0.0007 0.0000 0.0017
+      raw        maud       0.0077      0.0077      0.0000   0.0000   0.0000     0.0000 0.0000 0.0000
+      raw  privacy_qa       0.2587      0.2612      0.0025   0.0000   0.0059     0.0053 0.0000 0.0162
+      raw       macro       0.0685      0.0749      0.0065   0.0050   0.0081     0.1038 0.0873 0.1208
+RPf32_B16 contractnli       0.0003      0.0050      0.0048   0.0033   0.0066     0.9690 0.9620 0.9756
+RPf32_B16        cuad       0.0001      0.0002      0.0001   0.0000   0.0002     0.5416 0.5306 0.5521
+RPf32_B16        maud       0.0000      0.0000      0.0000   0.0000   0.0000     0.3778 0.3590 0.3970
+
+--- out_full/posthoc_exact_B/pq_vs_pcasq8_exact.csv  shape=(6, 13)
+     pq  pq_mem  pq_lat  pq_ndcg         pca  pca_mem  pca_lat  pca_ndcg    diff   ci_lo  ci_hi  lat_ratio  n_sources
+ PQ_B16  3.4467  1.2759   0.0099  PCAsq8_B23   3.5172   6.3323    0.0080  0.0019 -0.0003 0.0040     0.2015          3
+ PQ_B32  5.8933  2.1623   0.0219  PCAsq8_B39   5.9639  10.7365    0.0152  0.0067  0.0040 0.0096     0.2014          3
+ PQ_B64 10.7865  3.9552   0.0394  PCAsq8_B71  10.8574  20.2976    0.0311  0.0083  0.0045 0.0124     0.1949          3
+PQ_B128 20.5728 10.2306   0.0652 PCAsq8_B135  20.6442  36.5816    0.0570  0.0082  0.0036 0.0130     0.2797          3
+PQ_B256 40.1456 26.1635   0.0839 PCAsq8_B263  40.2180  72.7737    0.0825  0.0014 -0.0033 0.0058     0.3595          3
+PQ_B512 79.2911 61.9675   0.0890 PCAsq8_B519  79.3654 142.9026    0.0901 -0.0011 -0.0055 0.0025     0.4336          3
+
+--- out_full/posthoc_pq_B/pq_vs_pcasq8.csv  shape=(37, 13)
+        name    fam      B  mem_mib  lat_ms   new  ndcg_contractnli  ndcg_cuad  ndcg_maud  ndcg_privacy_qa  ndcg_macro  pcasq8_same_mem  diff_vs_pcasq8
+  PCAf32_B16 PCAf32   16.0   2.4466  1.1459 False            0.0016     0.0005     0.0000           0.0016      0.0007              NaN             NaN
+   RPf32_B16  RPf32   16.0   2.4466  1.1465 False            0.0001     0.0001     0.0000           0.0000      0.0001              NaN             NaN
+   RPsq8_B16  RPsq8   16.0   2.4468  0.7217 False            0.0011     0.0043     0.0001           0.0104      0.0019           0.0042         -0.0023
+  PCAsq8_B16 PCAsq8   16.0   2.4468  0.7628 False            0.0037     0.0078     0.0011           0.0484      0.0042           0.0042          0.0000
+      PQ_B16     PQ   16.0   3.4467  1.2759 False            0.0033     0.0252     0.0013           0.0884      0.0099           0.0079          0.0020
+   RPf32_B32  RPf32   32.0   4.8932  1.1341 False            0.0006     0.0004     0.0001           0.0006      0.0004           0.0118         -0.0114
+  PCAf32_B32 PCAf32   32.0   4.8932  1.1353 False            0.0029     0.0015     0.0001           0.0253      0.0015           0.0118         -0.0103
+  PCAsq8_B32 PCAsq8   32.0   4.8935  0.9769 False            0.0089     0.0241     0.0024           0.0721      0.0118           0.0118          0.0000
+   RPsq8_B32  RPsq8   32.0   4.8935  0.9574 False            0.0073     0.0117     0.0009           0.0233      0.0066           0.0118         -0.0051
+      PQ_B32     PQ   32.0   5.8933  2.1623 False            0.0086     0.0560     0.0013           0.0815      0.0219           0.0160          0.0060
+   RPf32_B64  RPf32   64.0   9.7864  1.0925 False            0.0013     0.0044     0.0002           0.0112      0.0019           0.0274         -0.0255
+  PCAf32_B64 PCAf32   64.0   9.7864  1.0157 False            0.0039     0.0075     0.0012           0.0500      0.0042           0.0274         -0.0232
+  PCAsq8_B64 PCAsq8   64.0   9.7869  1.6200 False            0.0177     0.0607     0.0038           0.1452      0.0274           0.0274          0.0000
+   RPsq8_B64  RPsq8   64.0   9.7869  1.6087 False            0.0170     0.0467     0.0021           0.0761      0.0219           0.0274         -0.0055
+      PQ_B64     PQ   64.0  10.7865  3.9552 False            0.0182     0.0967     0.0033           0.1431      0.0394           0.0310          0.0084
+  PCAf32_B96 PCAf32   96.0  14.6796  1.0990 False            0.0046     0.0133     0.0022           0.0540      0.0067           0.0425         -0.0358
+   RPf32_B96  RPf32   96.0  14.6796  1.1100 False            0.0056     0.0082     0.0007           0.0134      0.0048           0.0425         -0.0377
+  PCAsq8_B96 PCAsq8   96.0  14.6804  2.2193 False            0.0277     0.0940     0.0058           0.2078      0.0425           0.0425          0.0000
+   RPsq8_B96  RPsq8   96.0  14.6804  2.1535 False            0.0234     0.0698     0.0046           0.1216      0.0326           0.0425         -0.0099
+     PQ_B128     PQ  128.0  20.5728 10.2306  True            0.0467     0.1423     0.0066           0.2049      0.0652           0.0563          0.0089
+ PCAf32_B192 PCAf32  192.0  29.3592  1.8341 False            0.0125     0.0445     0.0026           0.1198      0.0199           0.0708         -0.0509
+  RPf32_B192  RPf32  192.0  29.3592  2.0120 False            0.0076     0.0282     0.0019           0.0462      0.0126           0.0708         -0.0583
+  RPsq8_B192  RPsq8  192.0  29.3607  5.3414 False            0.0503     0.1171     0.0072           0.2243      0.0582           0.0708         -0.0126
+ PCAsq8_B192 PCAsq8  192.0  29.3607  4.9934 False            0.0585     0.1449     0.0090           0.2676      0.0708           0.0708          0.0000
+     PQ_B256     PQ  256.0  40.1456 26.1635  True            0.0758     0.1660     0.0099           0.3085      0.0839           0.0783          0.0056
+ PCAf32_B384 PCAf32  384.0  58.7183  3.7367 False            0.0285     0.0938     0.0058           0.2065      0.0427           0.0875         -0.0448
+  RPf32_B384  RPf32  384.0  58.7183  3.8115 False            0.0235     0.0700     0.0046           0.1226      0.0327           0.0875         -0.0548
+  RPsq8_B384  RPsq8  384.0  58.7213 13.1985 False            0.0733     0.1445     0.0094           0.2490      0.0757           0.0875         -0.0117
+ PCAsq8_B384 PCAsq8  384.0  58.7213 13.0298 False            0.0939     0.1590     0.0095           0.3254      0.0875           0.0875          0.0000
+     PQ_B512     PQ  512.0  79.2911 61.9675  True            0.0869     0.1698     0.0102           0.3044      0.0890           0.0888          0.0002
+ PCAf32_B768 PCAf32  768.0 117.4366  8.0258 False            0.0590     0.1452     0.0088           0.2684      0.0710           0.0905         -0.0194
+  RPf32_B768  RPf32  768.0 117.4366  8.0813 False            0.0503     0.1171     0.0072           0.2238      0.0582           0.0905         -0.0323
+ PCAsq8_B768 PCAsq8  768.0 117.4425 21.6317 False            0.1061     0.1557     0.0095           0.3297      0.0905           0.0905          0.0000
+  RPsq8_B768  RPsq8  768.0 117.4425 22.1640 False            0.0784     0.1562     0.0092           0.2792      0.0813           0.0905         -0.0092
+ RPf32_B1536  RPf32 1536.0 234.8731 16.2191 False            0.0730     0.1445     0.0094           0.2487      0.0756              NaN             NaN
+PCAf32_B1536 PCAf32 1536.0 234.8731 16.4265 False            0.0942     0.1586     0.0095           0.3268      0.0874              NaN             NaN
+         raw    raw    NaN 626.3282 43.5084 False            0.0876     0.1713     0.0101           0.3175      0.0897              NaN             NaN
+
+========== 5. 로그 끝부분 (확증/보충/지연) ==========
+
+--- confirm_B.log
+                 H1b[B=768]  0.019450 0.005749              supported
+      H3a[contractnli>cuad]  0.574097 0.005749              supported
+      H3a[contractnli>maud] -0.015973 0.680330          not supported
+H3a[contractnli>privacy_qa]  0.637781      NaN excluded(few clusters)
+           H3b[contractnli]  0.140442 0.005749              supported
+                  H3b[cuad]  0.570171 0.005749              supported
+                  H3b[maud]  0.094291 0.005749              supported
+            H3b[privacy_qa]  0.635958      NaN excluded(few clusters)
+            H4[contractnli]  0.395920 0.005749              supported
+                   H4[cuad]  0.333844 0.005749              supported
+                   H4[maud]  0.208351 0.005749              supported
+             H4[privacy_qa]  0.717748      NaN excluded(few clusters)
+                         H5  0.091589 0.005749              supported
+                        H2b  0.003895      NaN              supported
+
+[가설 단위 판정: 모든 비제외 행이 Holm 통과해야 supported]
+ id  n_rows  n_pass  n_excluded      decision
+H1a       8       8           0     supported
+H1b       6       6           0     supported
+H1c       0       0           0      untested
+H3a       2       1           1 not supported
+H3b       3       3           1     supported
+ H4       3       3           1     supported
+ H5       1       1           0     supported
+H2b       1       1           0     supported
+
+
+--- pq_supplement.log
+nohup: ignoring input
+[동결 확인] cfr_v2.py sha256 일치 98cef001be37
+[data] 동일 질의문+동일 정답 중복 제거: 2건
+[data] N=160340 D=1024 nq=6877 docs=714 sources=['contractnli', 'cuad', 'maud', 'privacy_qa']
+[계획] D=1024 | 보충할 PQ m=[128, 256, 512] | 기존 PQ=[16, 32, 64]
+  PQ_B128        d=1024 mem=    20.6MiB lat=10.23ms ndcg=0.0974
+  PQ_B256        d=1024 mem=    40.1MiB lat=26.16ms ndcg=0.1192
+  PQ_B512        d=1024 mem=    79.3MiB lat=61.97ms ndcg=0.1230
+   name  mem_mib  lat_ms  ndcg_macro  pcasq8_same_mem  diff_vs_pcasq8   new
+ PQ_B16   3.4467  1.2759      0.0099           0.0079          0.0020 False
+ PQ_B32   5.8933  2.1623      0.0219           0.0160          0.0060 False
+ PQ_B64  10.7865  3.9552      0.0394           0.0310          0.0084 False
+PQ_B128  20.5728 10.2306      0.0652           0.0563          0.0089  True
+PQ_B256  40.1456 26.1635      0.0839           0.0783          0.0056  True
+PQ_B512  79.2911 61.9675      0.0890           0.0888          0.0002  True
+
+
+--- pcasq8_exact.log
+[동결 확인] cfr_v2.py sha256 일치 98cef001be37
+[data] 동일 질의문+동일 정답 중복 제거: 2건
+[data] N=160340 D=1024 nq=6877 docs=714 sources=['contractnli', 'cuad', 'maud', 'privacy_qa']
+[계획] PCAsq8 메모리 ≈ 0.000 + 0.15292*B | PQ→PCAsq8 매칭 차원: {'PQ_B16': 23, 'PQ_B32': 39, 'PQ_B64': 71, 'PQ_B128': 135, 'PQ_B256': 263, 'PQ_B512': 519}
+  PCAsq8_B23     d=  23 mem=     3.5MiB lat=6.33ms ndcg=0.0121
+  PCAsq8_B39     d=  39 mem=     6.0MiB lat=10.74ms ndcg=0.0240
+  PCAsq8_B71     d=  71 mem=    10.9MiB lat=20.30ms ndcg=0.0489
+  PCAsq8_B135    d= 135 mem=    20.6MiB lat=36.58ms ndcg=0.0881
+  PCAsq8_B263    d= 263 mem=    40.2MiB lat=72.77ms ndcg=0.1143
+  PCAsq8_B519    d= 519 mem=    79.4MiB lat=142.90ms ndcg=0.1182
+     pq  pq_mem  pq_lat  pq_ndcg         pca  pca_mem  pca_lat  pca_ndcg    diff   ci_lo  ci_hi  lat_ratio  n_sources
+ PQ_B16  3.4467  1.2759   0.0099  PCAsq8_B23   3.5172   6.3323    0.0080  0.0019 -0.0003 0.0040     0.2015          3
+ PQ_B32  5.8933  2.1623   0.0219  PCAsq8_B39   5.9639  10.7365    0.0152  0.0067  0.0040 0.0096     0.2014          3
+ PQ_B64 10.7865  3.9552   0.0394  PCAsq8_B71  10.8574  20.2976    0.0311  0.0083  0.0045 0.0124     0.1949          3
+PQ_B128 20.5728 10.2306   0.0652 PCAsq8_B135  20.6442  36.5816    0.0570  0.0082  0.0036 0.0130     0.2797          3
+PQ_B256 40.1456 26.1635   0.0839 PCAsq8_B263  40.2180  72.7737    0.0825  0.0014 -0.0033 0.0058     0.3595          3
+PQ_B512 79.2911 61.9675   0.0890 PCAsq8_B519  79.3654 142.9026    0.0901 -0.0011 -0.0055 0.0025     0.4336          3
+
+
+--- latency_remeasure.log
+[data] 동일 질의문+동일 정답 중복 제거: 2건
+[data] N=160340 D=1024 nq=6877 docs=714 sources=['contractnli', 'cuad', 'maud', 'privacy_qa']
+

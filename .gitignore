@@ -5,10 +5,28 @@ __pycache__/
 cache/
 _deprecated_runs/
 *.npy
-__pycache__/
+data_probe/
+out_H/
+out_smoke/
+# 익명성 / 다른 원고용
 .ipynb_checkpoints/
-*.pkl
-*.bak
-cache/
+*.ipynb
+rp_benchmark_scenario_D.py
+data_probe/
+smoke2.log
 _deprecated_runs/
+# 데이터 (재배포 안 함)
+data/
+data_lbrag/
+*.parquet
 *.npy
+*.pkl
+*.db
+__pycache__/
+imds_r2_final_output/
+revision_output_unified/
+revision_fix_output_v2/
+supplement_output_v2/
+exp4_exp9_corrected/
+faiss_logistics.index.*
+20251212_*executive_summary.json

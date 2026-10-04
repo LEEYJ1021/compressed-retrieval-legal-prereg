@@ -25,7 +25,7 @@ for M, dn in (("A", "out_full/explore_A"), ("B", "out_full/confirm_B")):
     if len(raw) != len(q) or not all(abs(raw[src == s].mean() - fr.loc["raw", "ndcg_" + s]) < 1e-4 for s in S):
         sys.exit(f"[중단] 모델 {M}: perq와 질의 정렬이 맞지 않음")
     names = sorted({os.path.basename(p)[:-4] for p in glob.glob(f"{dn}/cache/*.pkl")
-                    if os.path.basename(p).split("_B")[0] in ("raw", "PQ", "PCAsq8") or "PCAf32_B1536" in p}, key=key)
+                    if os.path.basename(p)[:-4].split("_B")[0] in ("raw", "PQ", "PCAsq8") or "PCAf32_B1536" in p}, key=key)
     D = {n: drw(L(n)) for n in names}
     def show(a, b):
         if a in D and b in D:

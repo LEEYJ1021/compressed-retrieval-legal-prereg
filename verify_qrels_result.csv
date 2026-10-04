@@ -1,0 +1,9 @@
+qrels,src,질의,정답없음,원본매칭실패,모호,평가,rec,prec,rec_lt1,prec_lt1
+qrels(원본),cuad,4042,8,0,0,4034,1.0,1.0,0.0,0.0
+qrels(원본),contractnli,977,0,0,0,977,1.0,1.0,0.0,0.0
+qrels(원본),maud,1676,0,0,0,1676,1.0,1.0,0.0,0.0
+qrels(원본),privacy_qa,194,0,0,4,194,1.0,1.0,0.0,0.0
+qrels_clean,cuad,4042,8,0,0,4034,1.0,1.0,0.0,0.0
+qrels_clean,contractnli,977,0,0,0,977,1.0,1.0,0.0,0.0
+qrels_clean,maud,1676,0,0,0,1676,1.0,1.0,0.0,0.0
+qrels_clean,privacy_qa,194,0,0,4,194,1.0,1.0,0.0,0.0

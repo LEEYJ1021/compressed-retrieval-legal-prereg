@@ -1,0 +1,84 @@
+nohup: ignoring input
+[data] 동일 질의문+동일 정답 중복 제거: 2건
+[data] N=160340 D=1024 nq=6877 docs=714 sources=['contractnli', 'cuad', 'maud', 'privacy_qa']
+[주의] 소스별 클러스터(계약서) 수: {'contractnli': 95, 'cuad': 461, 'maud': 150, 'privacy_qa': 7} -> 20개 미만이면 CI 신뢰도 낮음
+[A] 표현 평가
+  raw            d=1024 mem=   626.3MiB lat=43.51ms ndcg=0.1242
+  RPf32_B16      d=   4 mem=     2.4MiB lat=1.15ms ndcg=0.0001
+  PCAf32_B16     d=   4 mem=     2.4MiB lat=1.15ms ndcg=0.0006
+  RPsq8_B16      d=  16 mem=     2.4MiB lat=0.72ms ndcg=0.0030
+  PCAsq8_B16     d=  16 mem=     2.4MiB lat=0.76ms ndcg=0.0067
+  PQ_B16         d=1024 mem=     3.4MiB lat=1.28ms ndcg=0.0180
+  RPf32_B32      d=   8 mem=     4.9MiB lat=1.13ms ndcg=0.0004
+  PCAf32_B32     d=   8 mem=     4.9MiB lat=1.14ms ndcg=0.0020
+  RPsq8_B32      d=  32 mem=     4.9MiB lat=0.96ms ndcg=0.0088
+  PCAsq8_B32     d=  32 mem=     4.9MiB lat=0.98ms ndcg=0.0180
+  PQ_B32         d=1024 mem=     5.9MiB lat=2.16ms ndcg=0.0366
+  RPf32_B64      d=  16 mem=     9.8MiB lat=1.09ms ndcg=0.0031
+  PCAf32_B64     d=  16 mem=     9.8MiB lat=1.02ms ndcg=0.0066
+  RPsq8_B64      d=  64 mem=     9.8MiB lat=1.61ms ndcg=0.0324
+  PCAsq8_B64     d=  64 mem=     9.8MiB lat=1.62ms ndcg=0.0431
+  PQ_B64         d=1024 mem=    10.8MiB lat=3.96ms ndcg=0.0641
+  RPf32_B96      d=  24 mem=    14.7MiB lat=1.11ms ndcg=0.0061
+  PCAf32_B96     d=  24 mem=    14.7MiB lat=1.10ms ndcg=0.0105
+  RPsq8_B96      d=  96 mem=    14.7MiB lat=2.15ms ndcg=0.0488
+  PCAsq8_B96     d=  96 mem=    14.7MiB lat=2.22ms ndcg=0.0663
+  RPf32_B192     d=  48 mem=    29.4MiB lat=2.01ms ndcg=0.0194
+  PCAf32_B192    d=  48 mem=    29.4MiB lat=1.83ms ndcg=0.0319
+  RPsq8_B192     d= 192 mem=    29.4MiB lat=5.34ms ndcg=0.0838
+  PCAsq8_B192    d= 192 mem=    29.4MiB lat=4.99ms ndcg=0.1030
+  RPf32_B384     d=  96 mem=    58.7MiB lat=3.81ms ndcg=0.0489
+  PCAf32_B384    d=  96 mem=    58.7MiB lat=3.74ms ndcg=0.0663
+  RPsq8_B384     d= 384 mem=    58.7MiB lat=13.20ms ndcg=0.1044
+  PCAsq8_B384    d= 384 mem=    58.7MiB lat=13.03ms ndcg=0.1180
+  RPf32_B768     d= 192 mem=   117.4MiB lat=8.08ms ndcg=0.0838
+  PCAf32_B768    d= 192 mem=   117.4MiB lat=8.03ms ndcg=0.1032
+  RPsq8_B768     d= 768 mem=   117.4MiB lat=22.16ms ndcg=0.1128
+  PCAsq8_B768    d= 768 mem=   117.4MiB lat=21.63ms ndcg=0.1180
+  RPf32_B1536    d= 384 mem=   234.9MiB lat=16.22ms ndcg=0.1043
+  PCAf32_B1536   d= 384 mem=   234.9MiB lat=16.43ms ndcg=0.1178
+[B] 마진 모형 / ML
+  [ML] 대상 구성: ['PCAf32_B384', 'RPf32_B384', 'PQ_B32']
+[C] ANN 층
+[판정 제외] 계약서 수 < 20: ['privacy_qa']
+
+[CONFIRMATORY] 완료 -> out_full/confirm_B
+                         id  estimate   p_holm               decision
+                  H1a[B=16]  0.000630 0.005749              supported
+                  H1a[B=32]  0.001141 0.005749              supported
+                  H1a[B=64]  0.002245 0.005749              supported
+                  H1a[B=96]  0.001907 0.043989              supported
+                 H1a[B=192]  0.007331 0.005749              supported
+                 H1a[B=384]  0.010009 0.005749              supported
+                 H1a[B=768]  0.012823 0.005749              supported
+                H1a[B=1536]  0.011828 0.005749              supported
+                  H1b[B=32]  0.010281 0.005749              supported
+                  H1b[B=64]  0.023223 0.005749              supported
+                  H1b[B=96]  0.035790 0.005749              supported
+                 H1b[B=192]  0.050941 0.005749              supported
+                 H1b[B=384]  0.044763 0.005749              supported
+                 H1b[B=768]  0.019450 0.005749              supported
+      H3a[contractnli>cuad]  0.574097 0.005749              supported
+      H3a[contractnli>maud] -0.015973 0.680330          not supported
+H3a[contractnli>privacy_qa]  0.637781      NaN excluded(few clusters)
+           H3b[contractnli]  0.140442 0.005749              supported
+                  H3b[cuad]  0.570171 0.005749              supported
+                  H3b[maud]  0.094291 0.005749              supported
+            H3b[privacy_qa]  0.635958      NaN excluded(few clusters)
+            H4[contractnli]  0.395920 0.005749              supported
+                   H4[cuad]  0.333844 0.005749              supported
+                   H4[maud]  0.208351 0.005749              supported
+             H4[privacy_qa]  0.717748      NaN excluded(few clusters)
+                         H5  0.091589 0.005749              supported
+                        H2b  0.003895      NaN              supported
+
+[가설 단위 판정: 모든 비제외 행이 Holm 통과해야 supported]
+ id  n_rows  n_pass  n_excluded      decision
+H1a       8       8           0     supported
+H1b       6       6           0     supported
+H1c       0       0           0      untested
+H3a       2       1           1 not supported
+H3b       3       3           1     supported
+ H4       3       3           1     supported
+ H5       1       1           0     supported
+H2b       1       1           0     supported
