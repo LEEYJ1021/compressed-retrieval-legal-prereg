@@ -331,3 +331,28 @@ Benchmark chunk and query files are derived from CUAD, MAUD, ContractNLI and Pri
 ## 11. Citation
 
 Citation details are omitted for anonymous review and will be added after publication.
+
+---
+
+## 12. Update: post hoc supplement (after the frozen confirmation)
+
+The manuscript was revised ("Certifying compressed retrieval indexes by their weakest source"). Everything listed here was run after the freeze, with scripts separate from `cfr_v2.py`; all results are post hoc [P] or exploratory [E]. SHA-256 digests of these scripts are in `post_freeze_hashes.txt`. The frozen files (`cfr_v2.py`, `prereg.json`, `analysis_plan.md`, `freeze_hashes.txt`) are unchanged. Run scripts from the repository root.
+
+| Analysis | Scripts | Outputs |
+|---|---|---|
+| Precision ladder (fp16, 8-bit, 4-bit) | `evalcore.py`, `supp_bits_ladder.py`, `supp_all.py` | `out_full/supp2/{A,B}_std/ladder_*.csv` |
+| PQ vs PCA+SQ8 / SQ4 at matched memory; adjusted memory | `supp_all.py`, `supp_pq_opq.py`, `agg_pq.py` | `out_full/supp2/{A,B}_std/pq_*.csv`, `adjusted_memory.csv` |
+| Certification (R^L >= 0.95, W^L >= 0.90; PQ m = 384, 512) | `cert_table.py`, `final_checks.py` | `out_full/paper/certification.csv`, `out_full/supp2/cert_table.txt`, `worst_source.csv` |
+| Centring x projector; preprocessing diagnostic | `supp_centring.py`, `supp_centring2.py`, `diag_centre.py`, `diag_norm.py`, `diag_preproc.py` | `out_full/supp2/*/centring.csv`, `rp10.csv` |
+| Within-document ladder; instruction queries; 1-bit; recall proxy | `withindoc.py`, `supp_embed_q_instr.py`, `bin_contrast.py`, `supp_extra.py` | `out_full/supp2/` |
+| Third encoder (appendix diagnostic) | `embed_mrl.py`, `diag_m.py`, `noname.py` | `out_full/supp2/M_std/` |
+| Energy argument, supplementary check | `tau_kappa.py` | `out_full/tau_kappa/` |
+| Figures and tables of the revision | `make_paper_items.py` | `out_full/paper/`, `out_full/paper_revised/` |
+
+Headline update. Of the 21 candidates per encoder, two met both floors, PQ on raw embeddings (Model A m = 384, 59.5 MiB; Model B m = 512, 79.3 MiB). Four PCA-based scalar configurations met the macro floor but not the worst-source floor. The "mid-memory PQ window" in Section 1 (finding 3) is superseded by the matched-memory comparison in the revised paper (PQ above PCA+SQ8 in nine of twelve settings; 4-bit scalar codes match or exceed PQ at small memory).
+
+Reproducibility notes.
+- For PQ m = 384 (Model A) the frozen implementation gives R = 0.993, W^L = 0.947 and the reimplementation R = 0.989, W^L = 0.921; the certification verdict is the same.
+- Seeds were varied only partly (see the paper, Table 4); bootstrap intervals do not include seed variation.
+- Intermediate per-seed arrays (`*.npy`) are not included. Certification and ladder summaries are in the CSV and text files above.
+- Hashes in `freeze_hashes.txt` refer to the original, pre-anonymisation files.
