@@ -3,7 +3,7 @@
 
 This repository accompanies the paper *"Certifying compressed retrieval indexes by their weakest source: An equal-memory study on legal text"*. It contains the analysis code, the time-stamped frozen analysis plan, the hypothesis file, execution logs, verification scripts and derived result files. **Benchmark data and embeddings are not redistributed**; they can be regenerated from the original sources, and SHA-256 digests allow verification.
 
-An earlier version of the manuscript was titled *"Spending Bytes on Dimensions or on Bits?"*. Section 12 explains which parts of this repository belong to the frozen stage and which to the later revision.
+Section 12 lists which stages of the work are frozen and which were added afterwards.
 
 **Status labels used throughout:** **[C]** confirmatory (frozen hypothesis, hold-out encoder), **[P]** post hoc (run after the freeze, separate scripts, intervals not adjusted for multiplicity), **[E]** exploratory.
 
@@ -191,7 +191,7 @@ PQ minus scalar code, macro nDCG@10 (pipeline-level; PQ seeds: 5, and 3 for m = 
 | B | 256 | 40.15 | +0.0019 (includes 0) | -0.0047 |
 | B | 512 | 79.29 | -0.0011 (includes 0) | not defined |
 
-PQ exceeds PCA+SQ8 in nine of twelve settings (weak evidence at m = 16 for B). Charging the PCA projection matrix to the scalar codes did not change the ordering. These results supersede the earlier "mid-memory window" reading (Section 12).
+PQ exceeds PCA+SQ8 in nine of twelve settings (weak evidence at m = 16 for B). Charging the PCA projection matrix to the scalar codes did not change the ordering.
 
 ### 4.5 Cross-source confusion [C]
 
@@ -445,12 +445,12 @@ Citation details are omitted for anonymous review and will be added after public
 
 ---
 
-## 12. What changed between the earlier README and this version
+## 12. Stages of the work
 
-The earlier README described the first manuscript version. In the revision:
+| Stage | Commit or tag | What it contains | Status |
+|---|---|---|---|
+| Frozen stage | `039266a` | Exploration on Encoder A, freeze of script, plan and hypotheses, confirmation on Encoder B (H1b, H4) | **[C]** for H1b and H4 only |
+| Earlier post hoc stage | `d92bc65`, `4345282` | PQ supplement, exact-memory match, latency re-measurement, per-source contrasts | [P] / [E] |
+| Revision supplement | `b8784e3`, tag `v2-revision` | Precision ladder (fp16, 8-bit, 4-bit), PQ with m = 384 and 512, lower bounds R^L and W^L and certification, centring crossed with projector, within-document analysis, third-encoder diagnostic | [P] / [E] |
 
-- The emphasis moved from "bits versus dimensions" to **worst-source certification**; the title changed accordingly.
-- The "PQ beats 8-bit PCA only in a mid-memory window" finding (5.9 to 20.6 MiB, Encoder B) was replaced by the matched-memory comparison of Section 4.4, which adds PCA+SQ4 and PQ with m = 384 and 512.
-- For Encoder B the earlier README reported "no compressed configuration with intervals certified". After the certification extension (PQ with m = 384 and 512 added; lower bounds R^L and W^L computed), PQ with m = 512 is certified. All supporting files are under `out_full/supp2/` and `out_full/paper/`.
-- The earlier limitation "only SQ8 and plain PQ evaluated" no longer holds: fp16, 4-bit, 1-bit and a reduced OPQ analysis were added (post hoc).
-- The frozen files and the confirmatory results (H1b, H4) are unchanged.
+The revision supplement uses a separate implementation. It reproduces the frozen retention of PCA+SQ8 at B = 384 (Model A 0.9644 against 0.964; Model B 0.9762 against 0.976). For PQ with m = 384 in Model A the frozen implementation gives R = 0.993 and W^L = 0.947, and the reimplementation gives R = 0.989 and W^L = 0.921; the certification verdict is the same. The frozen files (`cfr_v2.py`, `prereg.json`, `analysis_plan.md`, `freeze_hashes.txt`) and the confirmatory results are unchanged since the freeze. Intermediate per-seed arrays (`*.npy`) are not included; aggregated CSV and text results are.
