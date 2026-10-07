@@ -1,0 +1,4 @@
+queries kept 6685 / 6879
+seed0 OPQ m=32: train 24s total 32s
+seed0 OPQ m=64: train 27s total 35s
+seed0 OPQ m=128: train 75s total 94s

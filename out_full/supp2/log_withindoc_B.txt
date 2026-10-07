@@ -1,0 +1,102 @@
+queries kept 6685 / 6879
+within-doc raw macro 0.454
+seed0 f32 B=16 d=4 macro=0.2464
+seed0 f32 B=32 d=8 macro=0.3069
+seed0 f32 B=64 d=16 macro=0.3512
+seed0 f32 B=96 d=24 macro=0.3612
+seed0 f32 B=192 d=48 macro=0.4105
+seed0 f32 B=384 d=96 macro=0.4410
+seed0 f32 B=768 d=192 macro=0.4506
+seed0 fp16 B=16 d=8 macro=0.3070
+seed0 fp16 B=32 d=16 macro=0.3512
+seed0 fp16 B=64 d=32 macro=0.3833
+seed0 fp16 B=96 d=48 macro=0.4105
+seed0 fp16 B=192 d=96 macro=0.4410
+seed0 fp16 B=384 d=192 macro=0.4505
+seed0 fp16 B=768 d=384 macro=0.4593
+seed0 sq8 B=16 d=16 macro=0.3513
+seed0 sq8 B=32 d=32 macro=0.3832
+seed0 sq8 B=64 d=64 macro=0.4237
+seed0 sq8 B=96 d=96 macro=0.4413
+seed0 sq8 B=192 d=192 macro=0.4500
+seed0 sq8 B=384 d=384 macro=0.4591
+seed0 sq8 B=768 d=768 macro=0.4625
+seed0 sq4 B=16 d=32 macro=0.3767
+seed0 sq4 B=32 d=64 macro=0.4183
+seed0 sq4 B=64 d=128 macro=0.4405
+seed0 sq4 B=96 d=192 macro=0.4469
+seed0 sq4 B=192 d=384 macro=0.4554
+seed0 sq4 B=384 d=768 macro=0.4578
+seed1 f32 B=16 d=4 macro=0.2462
+seed1 f32 B=32 d=8 macro=0.3055
+seed1 f32 B=64 d=16 macro=0.3506
+seed1 f32 B=96 d=24 macro=0.3593
+seed1 f32 B=192 d=48 macro=0.4104
+seed1 f32 B=384 d=96 macro=0.4404
+seed1 f32 B=768 d=192 macro=0.4508
+seed1 fp16 B=16 d=8 macro=0.3055
+seed1 fp16 B=32 d=16 macro=0.3506
+seed1 fp16 B=64 d=32 macro=0.3830
+seed1 fp16 B=96 d=48 macro=0.4105
+seed1 fp16 B=192 d=96 macro=0.4404
+seed1 fp16 B=384 d=192 macro=0.4508
+seed1 fp16 B=768 d=384 macro=0.4592
+seed1 sq8 B=16 d=16 macro=0.3504
+seed1 sq8 B=32 d=32 macro=0.3828
+seed1 sq8 B=64 d=64 macro=0.4231
+seed1 sq8 B=96 d=96 macro=0.4401
+seed1 sq8 B=192 d=192 macro=0.4504
+seed1 sq8 B=384 d=384 macro=0.4591
+seed1 sq8 B=768 d=768 macro=0.4627
+seed1 sq4 B=16 d=32 macro=0.3748
+seed1 sq4 B=32 d=64 macro=0.4181
+seed1 sq4 B=64 d=128 macro=0.4385
+seed1 sq4 B=96 d=192 macro=0.4457
+seed1 sq4 B=192 d=384 macro=0.4559
+seed1 sq4 B=384 d=768 macro=0.4587
+seed2 f32 B=16 d=4 macro=0.2456
+seed2 f32 B=32 d=8 macro=0.3055
+seed2 f32 B=64 d=16 macro=0.3510
+seed2 f32 B=96 d=24 macro=0.3606
+seed2 f32 B=192 d=48 macro=0.4103
+seed2 f32 B=384 d=96 macro=0.4412
+seed2 f32 B=768 d=192 macro=0.4510
+seed2 fp16 B=16 d=8 macro=0.3055
+seed2 fp16 B=32 d=16 macro=0.3509
+seed2 fp16 B=64 d=32 macro=0.3837
+seed2 fp16 B=96 d=48 macro=0.4102
+seed2 fp16 B=192 d=96 macro=0.4412
+seed2 fp16 B=384 d=192 macro=0.4509
+seed2 fp16 B=768 d=384 macro=0.4591
+seed2 sq8 B=16 d=16 macro=0.3512
+seed2 sq8 B=32 d=32 macro=0.3839
+seed2 sq8 B=64 d=64 macro=0.4238
+seed2 sq8 B=96 d=96 macro=0.4412
+seed2 sq8 B=192 d=192 macro=0.4509
+seed2 sq8 B=384 d=384 macro=0.4588
+seed2 sq8 B=768 d=768 macro=0.4625
+seed2 sq4 B=16 d=32 macro=0.3757
+seed2 sq4 B=32 d=64 macro=0.4180
+seed2 sq4 B=64 d=128 macro=0.4388
+seed2 sq4 B=96 d=192 macro=0.4471
+seed2 sq4 B=192 d=384 macro=0.4560
+seed2 sq4 B=384 d=768 macro=0.4576
+fmt     f32    fp16     sq4     sq8
+B                                  
+16   0.5420  0.6740  0.8277  0.7731
+32   0.6740  0.7730  0.9211  0.8444
+64   0.7730  0.8444  0.9677  0.9330
+96   0.7938  0.9041  0.9838  0.9712
+192  0.9041  0.9712  1.0040  0.9922
+384  0.9711  0.9929  1.0090  1.0111
+768  0.9930  1.0116     NaN  1.0190
+             diff                       lo                       hi                
+contrast fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32
+B                                                                                  
+16         0.0599  0.0248  0.1049   0.0536  0.0198  0.0970   0.0660  0.0298  0.1130
+32         0.0449  0.0348  0.0773   0.0388  0.0309  0.0700   0.0507  0.0385  0.0846
+64         0.0324  0.0158  0.0726   0.0273  0.0128  0.0669   0.0375  0.0186  0.0787
+96         0.0501  0.0057  0.0805   0.0459  0.0028  0.0754   0.0541  0.0085  0.0856
+192        0.0305  0.0053  0.0400   0.0271  0.0030  0.0358   0.0338  0.0077  0.0443
+384        0.0099 -0.0010  0.0181   0.0068 -0.0029  0.0144   0.0128  0.0010  0.0217
+768        0.0084     NaN  0.0118   0.0059     NaN  0.0091   0.0110     NaN  0.0146

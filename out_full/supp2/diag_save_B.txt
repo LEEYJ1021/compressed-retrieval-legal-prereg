@@ -1,0 +1,14 @@
+queries kept 6685 / 6879
+mean ||x||: 1.0  mean ||q||: 1.0
+                                   cond    B  macro  contractnli  cuad  maud  W_point
+         flat float32, raw (sanity: ~1) 4096  1.000        1.000 1.000 1.000    1.000
+  flat float32, PCA centred+norm d=1024 4096  1.008        1.208 0.910 0.933    0.910
+                         SQ8 raw d=1024 1024  1.001        1.003 1.000 1.009    1.000
+SQ4 raw d=1024 (same bytes as PQ m=512)  512  0.988        0.989 0.987 1.002    0.987
+                      SQ8 raw+L2 d=1024 1024  1.001        1.003 1.000 1.009    1.000
+                      SQ4 raw+L2 d=1024  512  0.988        0.989 0.987 1.002    0.987
+          SQ8 PCA uncentred+norm d=1024 1024  1.001        1.001 1.000 1.015    1.000
+ SQ8 PCA centred+norm d=1024 (pipeline) 1024  1.011        1.217 0.910 0.933    0.910
+            SQ4 PCA centred+norm d=1024  512  0.994        1.195 0.895 0.928    0.895
+      PQ m=512, raw (as in supp_all.py)  512  0.998        1.001 0.994 1.028    0.994
+                 PQ m=512, centred+norm  512  1.008        1.207 0.913 0.906    0.906

@@ -1,0 +1,20 @@
+nohup: ignoring input
+[2026-10-05 11:10:43] START
+[2026-10-05 11:10:43] noname queries + Model B encoder detection
+[2026-10-05 11:11:36] MRL embed (GPU)
+[2026-10-05 11:13:16] sq4m A
+[2026-10-05 11:32:12] sq4m B
+[2026-10-05 11:51:21] recall A
+[2026-10-05 11:54:01] recall B
+[2026-10-05 11:56:48] binary A
+[2026-10-05 11:56:56] binary B
+[2026-10-05 11:57:07] within-doc noname A
+[2026-10-05 11:58:08] global ladder noname A
+[2026-10-05 12:07:34] within-doc noname B
+[2026-10-05 12:08:40] global ladder noname B
+[2026-10-05 12:18:07] MRL analysis
+[2026-10-05 12:30:09] rp10 A
+[2026-10-05 12:37:40] rp10 B
+[2026-10-05 12:45:27] PQ seeds 3,4 B
+[2026-10-05 12:54:33] PQ seeds 3,4 A
+[2026-10-05 13:32:08] DONE

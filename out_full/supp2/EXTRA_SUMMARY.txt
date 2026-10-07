@@ -1,0 +1,482 @@
+
+################ log_noname.txt
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+changed fraction 1.0
+distinct questions: 262 of 6879
+---
+BEFORE: Consider the Collaboration Agreement between Astellas Pharma Inc. and FibroGen, Inc. for Development of Anemia Treatments; Is there a cap on liability under thi 
+AFTER : Is there a cap on liability under this contract?
+---
+BEFORE: Consider the Terms of Collaboration Agreement between McGill University and Mitacs; Does the document allow the Receiving Party to share some Confidential Infor 
+AFTER : Does the document allow the Receiving Party to share some Confidential Information with their employees?
+---
+BEFORE: Consider "Wordscapes"'s privacy policy; what data does it collect 
+AFTER : what data does it collect
+---
+BEFORE: Consider the Transition Services Agreement between Reynolds Group Holdings Inc. and Reynolds Consumer Products Inc.; Does the licensor's affiliates have any lic 
+AFTER : Does the licensor's affiliates have any licensing rights under this contract?
+---
+BEFORE: Consider the Merger Agreement between "Sterling Bancorp" and "Webster Financial Corporation"; What is the Definition of "Material Adverse Effect" 
+AFTER : What is the Definition of "Material Adverse Effect"
+---
+BEFORE: Consider the Acquisition Agreement between Parent "Stock Yards Bancorp, Inc." and Target "Kentucky Bancshares, Inc."; Where is the Specific Performance clause 
+AFTER : Where is the Specific Performance clause
+---
+BEFORE: Consider Excelerate's Non-Disclosure Agreement; Does the document require the Receiving Party to notify the Disclosing Party if they are required by law, regula 
+AFTER : Does the document require the Receiving Party to notify the Disclosing Party if they are required by law, regulation, or judicial process to disclose any Confid
+---
+BEFORE: Consider the Amendment to Wireless Content License Agreement between Glu Mobile, Inc. and Fox Mobile Entertainment, Inc.; Does this contract include an exclusiv 
+AFTER : Does this contract include an exclusivity agreement?
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7410.10it/s]
+/home/user/Research/IMDS_R2/noname.py:17: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  if m.get_sentence_embedding_dimension() != ref.shape[1]:
+[A] 'BAAI/bge-base-en-v1.5' prefix='': cosine 1.0000
+[A] SAVED with 'BAAI/bge-base-en-v1.5' prefix=''
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 6797.36it/s]
+/home/user/Research/IMDS_R2/noname.py:17: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  if m.get_sentence_embedding_dimension() != ref.shape[1]:
+[B] 'BAAI/bge-large-en-v1.5' prefix='': cosine -0.0368
+[B] 'BAAI/bge-large-en-v1.5' prefix='Represent this sentence for searching relevant passages: ': cosine -0.0409
+[B] 'BAAI/bge-large-en-v1.5' prefix='query: ': cosine -0.0392
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 7623.38it/s]
+/home/user/Research/IMDS_R2/noname.py:17: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  if m.get_sentence_embedding_dimension() != ref.shape[1]:
+[B] 'intfloat/e5-large-v2' prefix='': cosine 0.9843
+[B] 'intfloat/e5-large-v2' prefix='Represent this sentence for searching relevant passages: ': cosine 0.9476
+[B] 'intfloat/e5-large-v2' prefix='query: ': cosine 1.0000
+[B] SAVED with 'intfloat/e5-large-v2' prefix='query: '
+
+################ log_withindoc_A.txt
+seed2 f32 B=32 d=8 macro=0.2971
+seed2 f32 B=64 d=16 macro=0.3389
+seed2 f32 B=96 d=24 macro=0.3673
+seed2 f32 B=192 d=48 macro=0.3963
+seed2 f32 B=384 d=96 macro=0.4212
+seed2 f32 B=768 d=192 macro=0.4305
+seed2 fp16 B=16 d=8 macro=0.2971
+seed2 fp16 B=32 d=16 macro=0.3388
+seed2 fp16 B=64 d=32 macro=0.3818
+seed2 fp16 B=96 d=48 macro=0.3963
+seed2 fp16 B=192 d=96 macro=0.4212
+seed2 fp16 B=384 d=192 macro=0.4306
+seed2 fp16 B=768 d=384 macro=0.4347
+seed2 sq8 B=16 d=16 macro=0.3391
+seed2 sq8 B=32 d=32 macro=0.3817
+seed2 sq8 B=64 d=64 macro=0.4108
+seed2 sq8 B=96 d=96 macro=0.4214
+seed2 sq8 B=192 d=192 macro=0.4302
+seed2 sq8 B=384 d=384 macro=0.4346
+seed2 sq8 B=768 d=768 macro=0.4355
+seed2 sq4 B=16 d=32 macro=0.3761
+seed2 sq4 B=32 d=64 macro=0.4043
+seed2 sq4 B=64 d=128 macro=0.4188
+seed2 sq4 B=96 d=192 macro=0.4246
+seed2 sq4 B=192 d=384 macro=0.4305
+seed2 sq4 B=384 d=768 macro=0.4305
+fmt     f32    fp16     sq4     sq8
+B                                  
+16   0.5705  0.7078  0.8905  0.8023
+32   0.7078  0.8023  0.9627  0.9064
+64   0.8024  0.9066  0.9974  0.9758
+96   0.8734  0.9407  1.0110  0.9991
+192  0.9406  0.9990  1.0224  1.0213
+384  0.9990  1.0219  1.0241  1.0320
+768  1.0219  1.0324     NaN  1.0350
+             diff                       lo                       hi                
+contrast fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32
+B                                                                                  
+16         0.0578  0.0372  0.0976   0.0508  0.0331  0.0895   0.0650  0.0409  0.1056
+32         0.0398  0.0237  0.0836   0.0351  0.0204  0.0776   0.0447  0.0271  0.0895
+64         0.0439  0.0091  0.0730   0.0396  0.0064  0.0681   0.0479  0.0117  0.0779
+96         0.0283  0.0050  0.0529   0.0250  0.0022  0.0482   0.0317  0.0078  0.0576
+192        0.0246  0.0005  0.0340   0.0213 -0.0015  0.0302   0.0278  0.0025  0.0376
+384        0.0096 -0.0033  0.0139   0.0071 -0.0050  0.0107   0.0121 -0.0016  0.0170
+768        0.0044     NaN  0.0055   0.0026     NaN  0.0035   0.0064     NaN  0.0077
+
+################ log_withindoc_B.txt
+seed2 f32 B=32 d=8 macro=0.3055
+seed2 f32 B=64 d=16 macro=0.3510
+seed2 f32 B=96 d=24 macro=0.3606
+seed2 f32 B=192 d=48 macro=0.4103
+seed2 f32 B=384 d=96 macro=0.4412
+seed2 f32 B=768 d=192 macro=0.4510
+seed2 fp16 B=16 d=8 macro=0.3055
+seed2 fp16 B=32 d=16 macro=0.3509
+seed2 fp16 B=64 d=32 macro=0.3837
+seed2 fp16 B=96 d=48 macro=0.4102
+seed2 fp16 B=192 d=96 macro=0.4412
+seed2 fp16 B=384 d=192 macro=0.4509
+seed2 fp16 B=768 d=384 macro=0.4591
+seed2 sq8 B=16 d=16 macro=0.3512
+seed2 sq8 B=32 d=32 macro=0.3839
+seed2 sq8 B=64 d=64 macro=0.4238
+seed2 sq8 B=96 d=96 macro=0.4412
+seed2 sq8 B=192 d=192 macro=0.4509
+seed2 sq8 B=384 d=384 macro=0.4588
+seed2 sq8 B=768 d=768 macro=0.4625
+seed2 sq4 B=16 d=32 macro=0.3757
+seed2 sq4 B=32 d=64 macro=0.4180
+seed2 sq4 B=64 d=128 macro=0.4388
+seed2 sq4 B=96 d=192 macro=0.4471
+seed2 sq4 B=192 d=384 macro=0.4560
+seed2 sq4 B=384 d=768 macro=0.4576
+fmt     f32    fp16     sq4     sq8
+B                                  
+16   0.5420  0.6740  0.8277  0.7731
+32   0.6740  0.7730  0.9211  0.8444
+64   0.7730  0.8444  0.9677  0.9330
+96   0.7938  0.9041  0.9838  0.9712
+192  0.9041  0.9712  1.0040  0.9922
+384  0.9711  0.9929  1.0090  1.0111
+768  0.9930  1.0116     NaN  1.0190
+             diff                       lo                       hi                
+contrast fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32
+B                                                                                  
+16         0.0599  0.0248  0.1049   0.0536  0.0198  0.0970   0.0660  0.0298  0.1130
+32         0.0449  0.0348  0.0773   0.0388  0.0309  0.0700   0.0507  0.0385  0.0846
+64         0.0324  0.0158  0.0726   0.0273  0.0128  0.0669   0.0375  0.0186  0.0787
+96         0.0501  0.0057  0.0805   0.0459  0.0028  0.0754   0.0541  0.0085  0.0856
+192        0.0305  0.0053  0.0400   0.0271  0.0030  0.0358   0.0338  0.0077  0.0443
+384        0.0099 -0.0010  0.0181   0.0068 -0.0029  0.0144   0.0128  0.0010  0.0217
+768        0.0084     NaN  0.0118   0.0059     NaN  0.0091   0.0110     NaN  0.0146
+
+################ log_sq4m_A_final.txt
+queries kept 6685 / 6879
+raw macro 0.0684
+sq4m 16 seed 3 d 42
+sq4m 16 seed 4 d 42
+sq4m 32 seed 3 d 74
+sq4m 32 seed 4 d 74
+sq4m 64 seed 3 d 138
+sq4m 64 seed 4 d 138
+sq4m 128 seed 3 d 266
+sq4m 128 seed 4 d 266
+sq4m 256 seed 3 d 522
+sq4m 256 seed 4 d 522
+model   m  d_sq4  n_seeds_pq  n_seeds_sq4  PQ_ret  SQ4_ret  PQ_sd  SQ4_sd                    PQ-SQ4  SQ8_ret                   SQ4-SQ8
+    A  16     42           5            5  0.1946   0.1830 0.0002  0.0006 +0.0008 [-0.0017,+0.0029]   0.0748 +0.0074 [+0.0058,+0.0090]
+    A  32     74           5            5  0.3784   0.3740 0.0012  0.0006 +0.0003 [-0.0033,+0.0035]   0.1805 +0.0132 [+0.0109,+0.0158]
+    A  64    138           5            5  0.6443   0.6520 0.0009  0.0004 -0.0005 [-0.0047,+0.0032]   0.3713 +0.0192 [+0.0161,+0.0228]
+    A 128    266           5            5  0.8536   0.8821 0.0005  0.0002 -0.0020 [-0.0054,+0.0010]   0.6754 +0.0141 [+0.0104,+0.0187]
+    A 256    522           5            5  0.9626   0.9609 0.0003  0.0003 +0.0001 [-0.0024,+0.0023]   0.8970 +0.0044 [+0.0026,+0.0064]
+
+################ log_sq4m_B_final.txt
+queries kept 6685 / 6879
+raw macro 0.0897
+sq4m 16 seed 3 d 46
+sq4m 16 seed 4 d 46
+sq4m 32 seed 3 d 78
+sq4m 32 seed 4 d 78
+sq4m 64 seed 3 d 142
+sq4m 64 seed 4 d 142
+sq4m 128 seed 3 d 270
+sq4m 128 seed 4 d 270
+sq4m 256 seed 3 d 526
+sq4m 256 seed 4 d 526
+model   m  d_sq4  n_seeds_pq  n_seeds_sq4  PQ_ret  SQ4_ret  PQ_sd  SQ4_sd                    PQ-SQ4  SQ8_ret                   SQ4-SQ8
+    B  16     46           5            5  0.1153   0.1933 0.0012  0.0006 -0.0070 [-0.0097,-0.0046]   0.0886 +0.0094 [+0.0074,+0.0115]
+    B  32     78           5            5  0.2334   0.3524 0.0010  0.0004 -0.0107 [-0.0141,-0.0076]   0.1722 +0.0162 [+0.0137,+0.0186]
+    B  64    142           5            5  0.4483   0.6165 0.0010  0.0006 -0.0151 [-0.0189,-0.0117]   0.3453 +0.0243 [+0.0212,+0.0275]
+    B 128    270           5            5  0.7356   0.8906 0.0006  0.0004 -0.0139 [-0.0195,-0.0093]   0.6346 +0.0230 [+0.0175,+0.0292]
+    B 256    526           5            5  0.9336   0.9865 0.0011  0.0003 -0.0047 [-0.0097,-0.0005]   0.9124 +0.0067 [+0.0031,+0.0107]
+
+################ log_recall_A.txt
+queries kept 6685 / 6879
+raw macro 0.0684
+recall cfg f32 64
+recall cfg sq8 64
+recall cfg sq4 64
+recall cfg f32 96
+recall cfg sq8 96
+recall cfg sq4 96
+recall cfg f32 128
+recall cfg sq8 128
+recall cfg sq4 128
+recall cfg f32 192
+recall cfg sq8 192
+recall cfg sq4 192
+recall cfg f32 384
+recall cfg sq8 384
+recall cfg sq4 384
+recall cfg pq 64
+recall cfg pq 128
+model   config   hit5  hit10  cov10  hit10_ret  hit10_contractnli  hit10_cuad  hit10_maud                 hit10-raw
+    A      raw 0.1304 0.1801 0.1033     1.0000             0.1709      0.3354      0.0341                       NaN
+    A  f32_B64 0.0072 0.0110 0.0047     0.0608             0.0123      0.0146      0.0060 -0.1692 [-0.1877,-0.1529]
+    A  sq8_B64 0.0470 0.0653 0.0337     0.3627             0.0614      0.1202      0.0143 -0.1148 [-0.1295,-0.1011]
+    A  sq4_B64 0.0834 0.1176 0.0640     0.6528             0.1075      0.2214      0.0239 -0.0625 [-0.0743,-0.0521]
+    A  f32_B96 0.0142 0.0235 0.0106     0.1302             0.0225      0.0377      0.0102 -0.1567 [-0.1749,-0.1406]
+    A  sq8_B96 0.0679 0.0981 0.0525     0.5444             0.0839      0.1882      0.0221 -0.0821 [-0.0952,-0.0698]
+    A  sq4_B96 0.1009 0.1437 0.0824     0.7980             0.1361      0.2682      0.0269 -0.0364 [-0.0448,-0.0279]
+    A f32_B128 0.0229 0.0361 0.0176     0.2002             0.0399      0.0575      0.0108 -0.1441 [-0.1616,-0.1296]
+    A sq8_B128 0.0846 0.1175 0.0655     0.6523             0.1003      0.2283      0.0239 -0.0626 [-0.0738,-0.0525]
+    A sq4_B128 0.1135 0.1588 0.0922     0.8814             0.1535      0.2935      0.0293 -0.0214 [-0.0281,-0.0146]
+    A f32_B192 0.0330 0.0492 0.0245     0.2734             0.0502      0.0850      0.0125 -0.1309 [-0.1467,-0.1168]
+    A sq8_B192 0.1023 0.1459 0.0837     0.8101             0.1372      0.2719      0.0287 -0.0342 [-0.0427,-0.0264]
+    A sq4_B192 0.1216 0.1734 0.1021     0.9626             0.1750      0.3141      0.0311 -0.0067 [-0.0140,-0.0002]
+    A f32_B384 0.0686 0.0980 0.0521     0.5439             0.0839      0.1879      0.0221 -0.0821 [-0.0949,-0.0701]
+    A sq8_B384 0.1220 0.1760 0.1025     0.9769             0.1812      0.3151      0.0317 -0.0042 [-0.0100,+0.0016]
+    A sq4_B384 0.1226 0.1764 0.1032     0.9791             0.1822      0.3158      0.0311 -0.0038 [-0.0103,+0.0029]
+    A   pq_m64 0.0876 0.1245 0.0660     0.6914             0.0778      0.2719      0.0239 -0.0556 [-0.0686,-0.0448]
+    A  pq_m128 0.1155 0.1622 0.0888     0.9007             0.1331      0.3220      0.0317 -0.0179 [-0.0249,-0.0117]
+
+################ log_recall_B.txt
+queries kept 6685 / 6879
+raw macro 0.0897
+recall cfg f32 64
+recall cfg sq8 64
+recall cfg sq4 64
+recall cfg f32 96
+recall cfg sq8 96
+recall cfg sq4 96
+recall cfg f32 128
+recall cfg sq8 128
+recall cfg sq4 128
+recall cfg f32 192
+recall cfg sq8 192
+recall cfg sq4 192
+recall cfg f32 384
+recall cfg sq8 384
+recall cfg sq4 384
+recall cfg pq 64
+recall cfg pq 128
+model   config   hit5  hit10  cov10  hit10_ret  hit10_contractnli  hit10_cuad  hit10_maud                 hit10-raw
+    B      raw 0.1688 0.2193 0.1290     1.0000             0.1853      0.4321      0.0406                       NaN
+    B  f32_B64 0.0081 0.0169 0.0078     0.0771             0.0194      0.0253      0.0060 -0.2024 [-0.2226,-0.1850]
+    B  sq8_B64 0.0532 0.0788 0.0393     0.3593             0.0542      0.1636      0.0185 -0.1405 [-0.1607,-0.1248]
+    B  sq4_B64 0.1020 0.1398 0.0734     0.6375             0.0942      0.2942      0.0311 -0.0795 [-0.0952,-0.0648]
+    B  f32_B96 0.0132 0.0232 0.0106     0.1057             0.0184      0.0392      0.0119 -0.1961 [-0.2163,-0.1787]
+    B  sq8_B96 0.0844 0.1195 0.0604     0.5451             0.0860      0.2452      0.0275 -0.0998 [-0.1175,-0.0853]
+    B  sq4_B96 0.1342 0.1834 0.1019     0.8362             0.1525      0.3624      0.0352 -0.0359 [-0.0461,-0.0263]
+    B f32_B128 0.0219 0.0363 0.0172     0.1657             0.0276      0.0677      0.0137 -0.1830 [-0.2024,-0.1658]
+    B sq8_B128 0.1065 0.1497 0.0792     0.6824             0.1075      0.3069      0.0346 -0.0696 [-0.0857,-0.0558]
+    B sq4_B128 0.1524 0.1979 0.1134     0.9025             0.1627      0.3904      0.0406 -0.0214 [-0.0304,-0.0130]
+    B f32_B192 0.0408 0.0584 0.0292     0.2664             0.0399      0.1222      0.0131 -0.1609 [-0.1811,-0.1440]
+    B sq8_B192 0.1375 0.1858 0.1031     0.8472             0.1505      0.3681      0.0388 -0.0335 [-0.0449,-0.0230]
+    B sq4_B192 0.1587 0.2174 0.1272     0.9910             0.2047      0.4085      0.0388 -0.0020 [-0.0090,+0.0051]
+    B f32_B384 0.0840 0.1200 0.0609     0.5472             0.0870      0.2462      0.0269 -0.0993 [-0.1165,-0.0850]
+    B sq8_B384 0.1653 0.2192 0.1286     0.9996             0.2047      0.4118      0.0412 -0.0001 [-0.0070,+0.0070]
+    B sq4_B384 0.1610 0.2237 0.1334     1.0202             0.2170      0.4142      0.0400 +0.0044 [-0.0027,+0.0117]
+    B   pq_m64 0.0737 0.1074 0.0553     0.4897             0.0481      0.2598      0.0143 -0.1119 [-0.1310,-0.0953]
+    B  pq_m128 0.1238 0.1687 0.0935     0.7691             0.1075      0.3639      0.0346 -0.0506 [-0.0626,-0.0406]
+
+################ log_binary_A.txt
+queries kept 6685 / 6879
+raw macro 0.0684
+binary B 16 {'model': 'A', 'B': 16, 'd_bits': 128, 'ret': 0.41452667129960835, 'macro': 0.028334981823686916}
+binary B 32 {'model': 'A', 'B': 32, 'd_bits': 256, 'ret': 0.684848119176236, 'macro': 0.04681281170161258}
+binary B 64 {'model': 'A', 'B': 64, 'd_bits': 512, 'ret': 0.802488543132082, 'macro': 0.05485412606160095}
+binary B 96 {'model': 'A', 'B': 96, 'd_bits': 768, 'ret': 0.8007491978175392, 'macro': 0.054735233065601026}
+model  B  d_bits    ret  macro  sq8_ret_ladder  sq4_ret_ladder
+    A 16     128 0.4145 0.0283          0.0434          0.1396
+    A 32     256 0.6848 0.0468          0.1647          0.3084
+    A 64     512 0.8025 0.0549          0.3424          0.6240
+    A 96     768 0.8007 0.0547          0.5244          0.7770
+
+################ log_binary_B.txt
+queries kept 6685 / 6879
+raw macro 0.0897
+binary B 16 {'model': 'B', 'B': 16, 'd_bits': 128, 'ret': 0.28601932371677563, 'macro': 0.025648894093678782}
+binary B 32 {'model': 'B', 'B': 32, 'd_bits': 256, 'ret': 0.5810329086301126, 'macro': 0.05210435205823059}
+binary B 64 {'model': 'B', 'B': 64, 'd_bits': 512, 'ret': 0.6952039855124992, 'macro': 0.06234268778136983}
+binary B 96 {'model': 'B', 'B': 96, 'd_bits': 768, 'ret': 0.6648631609937766, 'macro': 0.05962186254242125}
+binary B 128 {'model': 'B', 'B': 128, 'd_bits': 1024, 'ret': 0.6298938935360271, 'macro': 0.056485979882809394}
+model   B  d_bits    ret  macro  sq8_ret_ladder  sq4_ret_ladder
+    B  16     128 0.2860 0.0256          0.0491          0.1146
+    B  32     256 0.5810 0.0521          0.1312          0.2922
+    B  64     512 0.6952 0.0623          0.3043          0.5739
+    B  96     768 0.6649 0.0596          0.4772          0.7671
+    B 128    1024 0.6299 0.0565             NaN             NaN
+
+################ log_mrl.txt
+mrl_pca_sq8_384_s1 macro=0.0670
+mrl_pca_sq8_768_s1 macro=0.0684
+mrl_pca_sq4_16_s1 macro=0.0045
+mrl_pca_sq4_32_s1 macro=0.0143
+mrl_pca_sq4_64_s1 macro=0.0346
+mrl_pca_sq4_96_s1 macro=0.0486
+mrl_pca_sq4_192_s1 macro=0.0649
+mrl_pca_sq4_384_s1 macro=0.0664
+mrl_pca_f32_16_s2 macro=0.0001
+mrl_pca_f32_32_s2 macro=0.0003
+mrl_pca_f32_64_s2 macro=0.0016
+mrl_pca_f32_96_s2 macro=0.0033
+mrl_pca_f32_192_s2 macro=0.0095
+mrl_pca_f32_384_s2 macro=0.0253
+mrl_pca_f32_768_s2 macro=0.0513
+mrl_pca_sq8_16_s2 macro=0.0015
+mrl_pca_sq8_32_s2 macro=0.0057
+mrl_pca_sq8_64_s2 macro=0.0152
+mrl_pca_sq8_96_s2 macro=0.0253
+mrl_pca_sq8_192_s2 macro=0.0514
+mrl_pca_sq8_384_s2 macro=0.0671
+mrl_pca_sq8_768_s2 macro=0.0682
+mrl_pca_sq4_16_s2 macro=0.0050
+mrl_pca_sq4_32_s2 macro=0.0145
+mrl_pca_sq4_64_s2 macro=0.0341
+mrl_pca_sq4_96_s2 macro=0.0494
+mrl_pca_sq4_192_s2 macro=0.0659
+mrl_pca_sq4_384_s2 macro=0.0672
+model   B  trunc_f32  trunc_sq8  trunc_sq4  pca_f32  pca_sq8  pca_sq4
+    M  16     0.0033     0.0129     0.1001   0.0013   0.0211   0.0633
+    M  32     0.0030     0.1172     0.3430   0.0035   0.0740   0.1831
+    M  64     0.0134     0.3747     0.7509   0.0213   0.1980   0.4504
+    M  96     0.0630     0.6314     0.8936   0.0423   0.3280   0.6419
+    M 192     0.2583     0.9146     0.9735   0.1264   0.6704   0.8559
+    M 384     0.6309     0.9961     0.9929   0.3288   0.8778   0.8759
+    M 768     0.9122     1.0003        NaN   0.6699   0.8939      NaN
+contrast            pca_sq8-pca_f32              trunc-pca|f32              trunc-pca|sq4              trunc-pca|sq8        trunc_sq8-trunc_f32
+B                                                                                                                                              
+16        +0.0015 [+0.0009,+0.0021]  +0.0002 [-0.0001,+0.0004]  +0.0028 [+0.0011,+0.0046]  -0.0006 [-0.0013,+0.0001]  +0.0007 [+0.0004,+0.0011]
+32        +0.0054 [+0.0039,+0.0070]  -0.0000 [-0.0003,+0.0002]  +0.0122 [+0.0084,+0.0164]  +0.0033 [+0.0015,+0.0051]  +0.0087 [+0.0069,+0.0107]
+64        +0.0135 [+0.0107,+0.0170]  -0.0006 [-0.0013,+0.0001]  +0.0230 [+0.0181,+0.0285]  +0.0135 [+0.0097,+0.0177]  +0.0276 [+0.0232,+0.0326]
+96        +0.0218 [+0.0183,+0.0262]  +0.0016 [+0.0000,+0.0032]  +0.0192 [+0.0149,+0.0242]  +0.0232 [+0.0178,+0.0294]  +0.0435 [+0.0364,+0.0516]
+192       +0.0416 [+0.0353,+0.0494]  +0.0101 [+0.0072,+0.0131]  +0.0090 [+0.0061,+0.0124]  +0.0187 [+0.0147,+0.0235]  +0.0502 [+0.0426,+0.0591]
+384       +0.0420 [+0.0341,+0.0515]  +0.0231 [+0.0177,+0.0294]  +0.0089 [+0.0062,+0.0121]  +0.0090 [+0.0062,+0.0126]  +0.0279 [+0.0222,+0.0352]
+768       +0.0171 [+0.0120,+0.0232]  +0.0185 [+0.0145,+0.0235]                        NaN  +0.0081 [+0.0058,+0.0108]  +0.0067 [+0.0036,+0.0105]
+
+################ log_recall_M.txt
+queries kept 6685 / 6879
+raw macro 0.0765
+recall cfg f32 64
+recall cfg sq8 64
+recall cfg sq4 64
+recall cfg f32 96
+recall cfg sq8 96
+recall cfg sq4 96
+recall cfg f32 128
+recall cfg sq8 128
+recall cfg sq4 128
+recall cfg f32 192
+recall cfg sq8 192
+recall cfg sq4 192
+recall cfg f32 384
+recall cfg sq8 384
+recall cfg sq4 384
+recall cfg pq 64
+recall cfg pq 128
+model   config   hit5  hit10  cov10  hit10_ret  hit10_contractnli  hit10_cuad  hit10_maud                 hit10-raw
+    M      raw 0.1458 0.1959 0.1132     1.0000             0.1965      0.3513      0.0400                       NaN
+    M  f32_B64 0.0038 0.0049 0.0026     0.0250             0.0020      0.0097      0.0030 -0.1910 [-0.2118,-0.1729]
+    M  sq8_B64 0.0297 0.0442 0.0219     0.2256             0.0287      0.0902      0.0137 -0.1517 [-0.1706,-0.1344]
+    M  sq4_B64 0.0668 0.0963 0.0505     0.4916             0.0716      0.1958      0.0215 -0.0996 [-0.1160,-0.0850]
+    M  f32_B96 0.0070 0.0104 0.0049     0.0529             0.0082      0.0164      0.0066 -0.1856 [-0.2063,-0.1674]
+    M  sq8_B96 0.0529 0.0726 0.0365     0.3707             0.0471      0.1517      0.0191 -0.1233 [-0.1421,-0.1067]
+    M  sq4_B96 0.0981 0.1340 0.0723     0.6841             0.1136      0.2551      0.0335 -0.0619 [-0.0747,-0.0499]
+    M f32_B128 0.0123 0.0175 0.0080     0.0895             0.0133      0.0327      0.0066 -0.1784 [-0.1986,-0.1611]
+    M sq8_B128 0.0729 0.1010 0.0525     0.5156             0.0778      0.2008      0.0245 -0.0949 [-0.1109,-0.0812]
+    M sq4_B128 0.1099 0.1572 0.0875     0.8021             0.1546      0.2841      0.0329 -0.0388 [-0.0479,-0.0307]
+    M f32_B192 0.0196 0.0296 0.0140     0.1512             0.0164      0.0617      0.0108 -0.1663 [-0.1859,-0.1485]
+    M sq8_B192 0.0977 0.1390 0.0758     0.7092             0.1198      0.2643      0.0329 -0.0570 [-0.0691,-0.0458]
+    M sq4_B192 0.1251 0.1749 0.0997     0.8927             0.1842      0.3076      0.0329 -0.0210 [-0.0279,-0.0145]
+    M f32_B384 0.0533 0.0731 0.0367     0.3729             0.0491      0.1510      0.0191 -0.1229 [-0.1412,-0.1065]
+    M sq8_B384 0.1260 0.1762 0.1020     0.8991             0.1863      0.3094      0.0329 -0.0198 [-0.0270,-0.0133]
+    M sq4_B384 0.1271 0.1770 0.1027     0.9034             0.1873      0.3079      0.0358 -0.0189 [-0.0260,-0.0122]
+    M   pq_m64 0.0839 0.1148 0.0605     0.5857             0.0716      0.2481      0.0245 -0.0812 [-0.0978,-0.0659]
+    M  pq_m128 0.1238 0.1714 0.0958     0.8747             0.1566      0.3235      0.0341 -0.0246 [-0.0319,-0.0179]
+
+################ log_rp10_A.txt
+queries kept 6685 / 6879
+raw macro 0.0684
+rp10 d 24
+rp10 d 48
+rp10 d 96
+rp10 d 192
+rp10 d 384
+                                             0                          1                          2                          3                          4
+model                                        A                          A                          A                          A                          A
+d                                           24                         48                         96                        192                        384
+pca_c_ret                             0.100431                   0.245626                   0.521815                   0.800826                   0.966566
+rp_u_ret                              0.091181                   0.276388                   0.538395                   0.737904                   0.865263
+rp_u_sd_draws                         0.025544                   0.036639                   0.048578                   0.032998                   0.029424
+rp_c_ret                              0.101009                   0.309168                   0.566569                   0.748766                   0.857505
+rp_c_sd_draws                         0.018322                   0.036869                   0.039678                   0.026205                   0.027334
+frozen_gap_draw_min                  -0.002525                  -0.006179                  -0.005564                   0.001293                   0.004558
+frozen_gap_draw_max                   0.003018                   0.001576                   0.005191                   0.008415                   0.010417
+FROZEN pca_c-rp_u    +0.0006 [-0.0007,+0.0022]  -0.0021 [-0.0046,+0.0008]  -0.0011 [-0.0044,+0.0021]  +0.0043 [+0.0015,+0.0072]  +0.0069 [+0.0043,+0.0101]
+projector|centred    -0.0000 [-0.0015,+0.0016]  -0.0043 [-0.0067,-0.0016]  -0.0031 [-0.0063,+0.0000]  +0.0036 [+0.0014,+0.0056]  +0.0075 [+0.0057,+0.0095]
+centring|RP          +0.0007 [+0.0004,+0.0009]  +0.0022 [+0.0016,+0.0029]  +0.0019 [+0.0009,+0.0032]  +0.0007 [-0.0007,+0.0025]  -0.0005 [-0.0020,+0.0013]
+
+################ log_rp10_B.txt
+queries kept 6685 / 6879
+raw macro 0.0897
+rp10 d 24
+rp10 d 48
+rp10 d 96
+rp10 d 192
+rp10 d 384
+                                             0                          1                          2                          3                          4
+model                                        B                          B                          B                          B                          B
+d                                           24                         48                         96                        192                        384
+pca_c_ret                             0.073334                   0.220174                   0.481129                   0.799639                   0.973396
+rp_u_ret                              0.034043                   0.140199                   0.375031                   0.638079                   0.810316
+rp_u_sd_draws                         0.010889                   0.026768                   0.045158                   0.046131                   0.044488
+rp_c_ret                               0.04147                   0.181726                   0.447736                   0.703426                    0.85038
+rp_c_sd_draws                         0.011922                   0.033088                   0.032535                   0.049987                   0.030513
+frozen_gap_draw_min                   0.001784                   0.002614                   0.003457                   0.007676                   0.008213
+frozen_gap_draw_max                   0.004728                   0.010944                   0.016237                   0.021545                   0.019512
+FROZEN pca_c-rp_u    +0.0035 [+0.0023,+0.0048]  +0.0072 [+0.0047,+0.0098]  +0.0095 [+0.0062,+0.0126]  +0.0145 [+0.0106,+0.0187]  +0.0146 [+0.0104,+0.0197]
+projector|centred    +0.0029 [+0.0016,+0.0042]  +0.0034 [+0.0010,+0.0059]  +0.0030 [-0.0014,+0.0067]  +0.0086 [+0.0042,+0.0125]  +0.0110 [+0.0087,+0.0138]
+centring|RP          +0.0007 [+0.0005,+0.0009]  +0.0037 [+0.0030,+0.0046]  +0.0065 [+0.0049,+0.0086]  +0.0059 [+0.0031,+0.0094]  +0.0036 [+0.0008,+0.0069]
+
+################ agg_ladder_A_noname.txt
+=== A noname  raw macro 0.0077 ===
+fmt     f32    fp16     sq4     sq8
+B                                  
+16   0.0369  0.2195  0.5181  0.2729
+32   0.2209  0.2792  0.7340  0.4758
+64   0.2796  0.4900  0.8736  0.7592
+96   0.4619  0.6401  0.8907  0.7921
+192  0.6389  0.8012  1.0251  0.9071
+384  0.8013  0.9020  1.0364  1.0042
+768  0.9019  1.0026     NaN  1.0133
+fmt     f32    fp16     sq4     sq8
+B                                  
+16   0.0038  0.0032  0.0534  0.0070
+32   0.0034  0.0044  0.0476  0.0054
+64   0.0046  0.0073  0.0500  0.0206
+96   0.0124  0.0112  0.0520  0.0045
+192  0.0123  0.0193  0.0119  0.0089
+384  0.0187  0.0027  0.0102  0.0208
+768  0.0023  0.0077     NaN  0.0038
+             diff                       lo                       hi                
+contrast fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32
+B                                                                                  
+16         0.0014  0.0019  0.0018   0.0006  0.0010  0.0011   0.0023  0.0029  0.0026
+32         0.0004  0.0020  0.0020  -0.0006  0.0008  0.0007   0.0015  0.0033  0.0032
+64         0.0016  0.0009  0.0037   0.0006 -0.0001  0.0023   0.0027  0.0019  0.0052
+96         0.0014  0.0008  0.0025   0.0005 -0.0001  0.0011   0.0023  0.0017  0.0040
+192        0.0012  0.0009  0.0021   0.0001  0.0002  0.0008   0.0024  0.0017  0.0035
+384        0.0008  0.0002  0.0016  -0.0001 -0.0003  0.0005   0.0017  0.0009  0.0027
+768        0.0008     NaN  0.0009   0.0001     NaN  0.0002   0.0015     NaN  0.0015
+
+################ agg_ladder_B_noname.txt
+=== B noname  raw macro 0.0073 ===
+fmt     f32    fp16     sq4     sq8
+B                                  
+16   0.1204  0.1917  0.6409  0.4037
+32   0.1906  0.3851  0.8364  0.6037
+64   0.3859  0.5979  0.9720  0.7849
+96   0.5173  0.7529  1.0164  0.9226
+192  0.7535  0.9246  1.0744  1.0200
+384  0.9247  1.0304  1.0432  1.0828
+768  1.0303  1.0782     NaN  1.0795
+fmt     f32    fp16     sq4     sq8
+B                                  
+16   0.0078  0.0031  0.0701  0.0225
+32   0.0051  0.0104  0.0525  0.0026
+64   0.0094  0.0141  0.0247  0.0245
+96   0.0181  0.0069  0.0186  0.0155
+192  0.0067  0.0084  0.0136  0.0100
+384  0.0083  0.0121  0.0624  0.0046
+768  0.0120  0.0018     NaN  0.0085
+             diff                       lo                       hi                
+contrast fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32 fp16-f32 sq4-sq8 sq8-f32
+B                                                                                  
+16         0.0005  0.0017  0.0021  -0.0001  0.0005  0.0010   0.0012  0.0030  0.0032
+32         0.0014  0.0017  0.0030   0.0005  0.0005  0.0018   0.0024  0.0029  0.0044
+64         0.0016  0.0014  0.0029   0.0004  0.0002  0.0014   0.0027  0.0025  0.0046
+96         0.0017  0.0007  0.0030   0.0004 -0.0005  0.0012   0.0029  0.0017  0.0050
+192        0.0013  0.0004  0.0020  -0.0002 -0.0005  0.0002   0.0028  0.0013  0.0038
+384        0.0008 -0.0003  0.0012  -0.0004 -0.0010 -0.0002   0.0018  0.0004  0.0025
+768        0.0004     NaN  0.0004  -0.0004     NaN -0.0006   0.0012     NaN  0.0014

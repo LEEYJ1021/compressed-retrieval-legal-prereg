@@ -1,0 +1,27 @@
+\begin{table}[t]
+\centering\small
+\caption{Product quantisation versus PCA+8-bit scalar quantisation at matched index size, and OPQ versus PQ.}
+\label{tab:pq}
+\begin{tabular}{cccccccc}
+\toprule
+PQ $m$ & MiB & SQ8 $d$ & PQ & PCA+SQ8 & PQ $-$ SQ8 & OPQ & OPQ $-$ PQ \\
+\midrule
+\multicolumn{8}{l}{\textit{Model A}} \\
+16 & 3.2 & 21 & 0.195 & 0.075 & +0.0082 [+0.0064, +0.0099] & -- & -- \\
+32 & 5.6 & 37 & 0.378 & 0.180 & +0.0135 [+0.0106, +0.0160] & 0.485 & +0.0073 [+0.0050, +0.0098] \\
+64 & 10.5 & 69 & 0.644 & 0.371 & +0.0187 [+0.0151, +0.0221] & 0.737 & +0.0064 [+0.0035, +0.0092] \\
+128 & 20.3 & 133 & 0.854 & 0.675 & +0.0122 [+0.0086, +0.0161] & 0.883 & +0.0020 [$-$0.0000, +0.0044]$^\dagger$ \\
+256 & 39.9 & 261 & 0.963 & 0.897 & +0.0045 [+0.0021, +0.0067] & -- & -- \\
+384 & 59.5 & 389 & 0.989 & 0.968 & +0.0014 [$-$0.0006, +0.0033]$^\dagger$ & -- & -- \\
+\midrule
+\multicolumn{8}{l}{\textit{Model B}} \\
+16 & 3.5 & 23 & 0.115 & 0.089 & +0.0024 [+0.0007, +0.0041] & -- & -- \\
+32 & 5.9 & 39 & 0.233 & 0.172 & +0.0055 [+0.0031, +0.0077] & 0.541 & +0.0276 [+0.0242, +0.0309] \\
+64 & 10.8 & 71 & 0.448 & 0.345 & +0.0092 [+0.0059, +0.0124] & 0.721 & +0.0244 [+0.0207, +0.0286] \\
+128 & 20.6 & 135 & 0.736 & 0.635 & +0.0091 [+0.0051, +0.0132] & 0.886 & +0.0135 [+0.0101, +0.0171] \\
+256 & 40.1 & 263 & 0.934 & 0.912 & +0.0019 [$-$0.0026, +0.0062]$^\dagger$ & -- & -- \\
+512 & 79.3 & 519 & 0.994 & 1.006 & $-$0.0011 [$-$0.0054, +0.0027]$^\dagger$ & -- & -- \\
+\bottomrule
+\end{tabular}
+\par\smallskip\footnotesize Retention columns are means over seeds; differences are macro nDCG@10 with 95\% contract-cluster bootstrap intervals. PQ and PCA+SQ8: three seeds (seed also changes the 50,000-chunk training sample and k-means seed). OPQ: one seed, 20,000 training chunks, 10 iterations; its rotation matrix (4D$^2$ bytes) is not counted in MiB. PCA projection-matrix memory is not charged to SQ8. $^\dagger$ interval contains zero. Post hoc [P].
+\end{table}

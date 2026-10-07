@@ -1,0 +1,45 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+changed fraction 1.0
+distinct questions: 262 of 6879
+---
+BEFORE: Consider the Collaboration Agreement between Astellas Pharma Inc. and FibroGen, Inc. for Development of Anemia Treatments; Is there a cap on liability under thi 
+AFTER : Is there a cap on liability under this contract?
+---
+BEFORE: Consider the Terms of Collaboration Agreement between McGill University and Mitacs; Does the document allow the Receiving Party to share some Confidential Infor 
+AFTER : Does the document allow the Receiving Party to share some Confidential Information with their employees?
+---
+BEFORE: Consider "Wordscapes"'s privacy policy; what data does it collect 
+AFTER : what data does it collect
+---
+BEFORE: Consider the Transition Services Agreement between Reynolds Group Holdings Inc. and Reynolds Consumer Products Inc.; Does the licensor's affiliates have any lic 
+AFTER : Does the licensor's affiliates have any licensing rights under this contract?
+---
+BEFORE: Consider the Merger Agreement between "Sterling Bancorp" and "Webster Financial Corporation"; What is the Definition of "Material Adverse Effect" 
+AFTER : What is the Definition of "Material Adverse Effect"
+---
+BEFORE: Consider the Acquisition Agreement between Parent "Stock Yards Bancorp, Inc." and Target "Kentucky Bancshares, Inc."; Where is the Specific Performance clause 
+AFTER : Where is the Specific Performance clause
+---
+BEFORE: Consider Excelerate's Non-Disclosure Agreement; Does the document require the Receiving Party to notify the Disclosing Party if they are required by law, regula 
+AFTER : Does the document require the Receiving Party to notify the Disclosing Party if they are required by law, regulation, or judicial process to disclose any Confid
+---
+BEFORE: Consider the Amendment to Wireless Content License Agreement between Glu Mobile, Inc. and Fox Mobile Entertainment, Inc.; Does this contract include an exclusiv 
+AFTER : Does this contract include an exclusivity agreement?
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7410.10it/s]
+/home/user/Research/IMDS_R2/noname.py:17: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  if m.get_sentence_embedding_dimension() != ref.shape[1]:
+[A] 'BAAI/bge-base-en-v1.5' prefix='': cosine 1.0000
+[A] SAVED with 'BAAI/bge-base-en-v1.5' prefix=''
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 6797.36it/s]
+/home/user/Research/IMDS_R2/noname.py:17: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  if m.get_sentence_embedding_dimension() != ref.shape[1]:
+[B] 'BAAI/bge-large-en-v1.5' prefix='': cosine -0.0368
+[B] 'BAAI/bge-large-en-v1.5' prefix='Represent this sentence for searching relevant passages: ': cosine -0.0409
+[B] 'BAAI/bge-large-en-v1.5' prefix='query: ': cosine -0.0392
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 7623.38it/s]
+/home/user/Research/IMDS_R2/noname.py:17: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  if m.get_sentence_embedding_dimension() != ref.shape[1]:
+[B] 'intfloat/e5-large-v2' prefix='': cosine 0.9843
+[B] 'intfloat/e5-large-v2' prefix='Represent this sentence for searching relevant passages: ': cosine 0.9476
+[B] 'intfloat/e5-large-v2' prefix='query: ': cosine 1.0000
+[B] SAVED with 'intfloat/e5-large-v2' prefix='query: '

@@ -1,0 +1,5 @@
+queries kept 6685 / 6879
+seed1 PQ m=384: train 76s total 117s
+seed1 SQ8 m=384 d=389
+seed2 PQ m=384: train 76s total 116s
+seed2 SQ8 m=384 d=389

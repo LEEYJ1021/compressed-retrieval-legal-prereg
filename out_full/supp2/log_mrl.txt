@@ -1,0 +1,99 @@
+queries kept 6685 / 6879
+raw macro 0.0765
+mrl_pca_f32_16_s0 macro=0.0001
+mrl_pca_f32_32_s0 macro=0.0003
+mrl_pca_f32_64_s0 macro=0.0016
+mrl_pca_f32_96_s0 macro=0.0033
+mrl_pca_f32_192_s0 macro=0.0096
+mrl_pca_f32_384_s0 macro=0.0252
+mrl_pca_f32_768_s0 macro=0.0512
+mrl_pca_sq8_16_s0 macro=0.0017
+mrl_pca_sq8_32_s0 macro=0.0057
+mrl_pca_sq8_64_s0 macro=0.0150
+mrl_pca_sq8_96_s0 macro=0.0250
+mrl_pca_sq8_192_s0 macro=0.0512
+mrl_pca_sq8_384_s0 macro=0.0672
+mrl_pca_sq8_768_s0 macro=0.0685
+mrl_pca_sq4_16_s0 macro=0.0050
+mrl_pca_sq4_32_s0 macro=0.0132
+mrl_pca_sq4_64_s0 macro=0.0346
+mrl_pca_sq4_96_s0 macro=0.0492
+mrl_pca_sq4_192_s0 macro=0.0655
+mrl_pca_sq4_384_s0 macro=0.0673
+mrl_trunc_f32_16_s0 macro=0.0003
+mrl_trunc_f32_32_s0 macro=0.0002
+mrl_trunc_f32_64_s0 macro=0.0010
+mrl_trunc_f32_96_s0 macro=0.0048
+mrl_trunc_f32_192_s0 macro=0.0198
+mrl_trunc_f32_384_s0 macro=0.0482
+mrl_trunc_f32_768_s0 macro=0.0698
+mrl_trunc_sq8_16_s0 macro=0.0010
+mrl_trunc_sq8_32_s0 macro=0.0090
+mrl_trunc_sq8_64_s0 macro=0.0286
+mrl_trunc_sq8_96_s0 macro=0.0483
+mrl_trunc_sq8_192_s0 macro=0.0699
+mrl_trunc_sq8_384_s0 macro=0.0762
+mrl_trunc_sq8_768_s0 macro=0.0765
+mrl_trunc_sq4_16_s0 macro=0.0077
+mrl_trunc_sq4_32_s0 macro=0.0262
+mrl_trunc_sq4_64_s0 macro=0.0574
+mrl_trunc_sq4_96_s0 macro=0.0683
+mrl_trunc_sq4_192_s0 macro=0.0744
+mrl_trunc_sq4_384_s0 macro=0.0759
+mrl_pca_f32_16_s1 macro=0.0001
+mrl_pca_f32_32_s1 macro=0.0002
+mrl_pca_f32_64_s1 macro=0.0016
+mrl_pca_f32_96_s1 macro=0.0031
+mrl_pca_f32_192_s1 macro=0.0098
+mrl_pca_f32_384_s1 macro=0.0249
+mrl_pca_f32_768_s1 macro=0.0512
+mrl_pca_sq8_16_s1 macro=0.0016
+mrl_pca_sq8_32_s1 macro=0.0055
+mrl_pca_sq8_64_s1 macro=0.0152
+mrl_pca_sq8_96_s1 macro=0.0249
+mrl_pca_sq8_192_s1 macro=0.0512
+mrl_pca_sq8_384_s1 macro=0.0670
+mrl_pca_sq8_768_s1 macro=0.0684
+mrl_pca_sq4_16_s1 macro=0.0045
+mrl_pca_sq4_32_s1 macro=0.0143
+mrl_pca_sq4_64_s1 macro=0.0346
+mrl_pca_sq4_96_s1 macro=0.0486
+mrl_pca_sq4_192_s1 macro=0.0649
+mrl_pca_sq4_384_s1 macro=0.0664
+mrl_pca_f32_16_s2 macro=0.0001
+mrl_pca_f32_32_s2 macro=0.0003
+mrl_pca_f32_64_s2 macro=0.0016
+mrl_pca_f32_96_s2 macro=0.0033
+mrl_pca_f32_192_s2 macro=0.0095
+mrl_pca_f32_384_s2 macro=0.0253
+mrl_pca_f32_768_s2 macro=0.0513
+mrl_pca_sq8_16_s2 macro=0.0015
+mrl_pca_sq8_32_s2 macro=0.0057
+mrl_pca_sq8_64_s2 macro=0.0152
+mrl_pca_sq8_96_s2 macro=0.0253
+mrl_pca_sq8_192_s2 macro=0.0514
+mrl_pca_sq8_384_s2 macro=0.0671
+mrl_pca_sq8_768_s2 macro=0.0682
+mrl_pca_sq4_16_s2 macro=0.0050
+mrl_pca_sq4_32_s2 macro=0.0145
+mrl_pca_sq4_64_s2 macro=0.0341
+mrl_pca_sq4_96_s2 macro=0.0494
+mrl_pca_sq4_192_s2 macro=0.0659
+mrl_pca_sq4_384_s2 macro=0.0672
+model   B  trunc_f32  trunc_sq8  trunc_sq4  pca_f32  pca_sq8  pca_sq4
+    M  16     0.0033     0.0129     0.1001   0.0013   0.0211   0.0633
+    M  32     0.0030     0.1172     0.3430   0.0035   0.0740   0.1831
+    M  64     0.0134     0.3747     0.7509   0.0213   0.1980   0.4504
+    M  96     0.0630     0.6314     0.8936   0.0423   0.3280   0.6419
+    M 192     0.2583     0.9146     0.9735   0.1264   0.6704   0.8559
+    M 384     0.6309     0.9961     0.9929   0.3288   0.8778   0.8759
+    M 768     0.9122     1.0003        NaN   0.6699   0.8939      NaN
+contrast            pca_sq8-pca_f32              trunc-pca|f32              trunc-pca|sq4              trunc-pca|sq8        trunc_sq8-trunc_f32
+B                                                                                                                                              
+16        +0.0015 [+0.0009,+0.0021]  +0.0002 [-0.0001,+0.0004]  +0.0028 [+0.0011,+0.0046]  -0.0006 [-0.0013,+0.0001]  +0.0007 [+0.0004,+0.0011]
+32        +0.0054 [+0.0039,+0.0070]  -0.0000 [-0.0003,+0.0002]  +0.0122 [+0.0084,+0.0164]  +0.0033 [+0.0015,+0.0051]  +0.0087 [+0.0069,+0.0107]
+64        +0.0135 [+0.0107,+0.0170]  -0.0006 [-0.0013,+0.0001]  +0.0230 [+0.0181,+0.0285]  +0.0135 [+0.0097,+0.0177]  +0.0276 [+0.0232,+0.0326]
+96        +0.0218 [+0.0183,+0.0262]  +0.0016 [+0.0000,+0.0032]  +0.0192 [+0.0149,+0.0242]  +0.0232 [+0.0178,+0.0294]  +0.0435 [+0.0364,+0.0516]
+192       +0.0416 [+0.0353,+0.0494]  +0.0101 [+0.0072,+0.0131]  +0.0090 [+0.0061,+0.0124]  +0.0187 [+0.0147,+0.0235]  +0.0502 [+0.0426,+0.0591]
+384       +0.0420 [+0.0341,+0.0515]  +0.0231 [+0.0177,+0.0294]  +0.0089 [+0.0062,+0.0121]  +0.0090 [+0.0062,+0.0126]  +0.0279 [+0.0222,+0.0352]
+768       +0.0171 [+0.0120,+0.0232]  +0.0185 [+0.0145,+0.0235]                        NaN  +0.0081 [+0.0058,+0.0108]  +0.0067 [+0.0036,+0.0105]

@@ -1,0 +1,169 @@
+
+======================================================================
+1. queries.parquet
+======================================================================
+shape (6879, 4) | columns ['qid', 'source', 'text', 'gold_chunks']
+qid               str
+source            str
+text              str
+gold_chunks    object
+query char length: min/median/max 50 167 323
+
+--- 25 sample queries (5 per source if available) ---
+[contractnli] "Consider UALR's Non-Disclosure Agreement; Does the document allow the Receiving Party to acquire information similar to the Confidential Information from a third party?"
+[contractnli] 'Consider the Non-Disclosure Agreement between CEII and NDA; Does the document state that Confidential Information shall only include technical information?'
+[contractnli] "Consider Seeed's Non-Disclosure Agreement; Does the document mention that some obligations of the Agreement may survive the termination of the Agreement?"
+[contractnli] "Consider VELCO's Non-Disclosure Agreement; Does the document require that all Confidential Information be expressly identified by the Disclosing Party?"
+[contractnli] "Consider LiiON's Non-Disclosure Agreement; Does the document allow the Receiving Party to independently develop information that is similar to the Confidential Information?"
+[cuad] 'Consider the Co-Branding Agreement between NETTAXI Online Communities, Inc. and Solutions Media, Inc. (SpinRecords.com); What happens in the event of a change of control of one of the parties in this contract?'
+[cuad] 'Consider the Transfer and Servicing Agreement among Verizon Owner Trust 2020-A, Verizon ABS LLC, and Cellco Partnership d/b/a Verizon Wireless; Are there any services to be provided after the termination of this contract?'
+[cuad] 'Consider the Joint Venture Agreement between Tate & Lyle Fermentation Products Ltd. and Igene Biotechnology, Inc. for Astaxanthin Production; Does this contract include any right of first refusal, right of first offer, or right of first negotiation?'
+[cuad] 'Consider the Intellectual Property Agreement between Honeywell International Inc. and Garrett Motion Inc.; How is intellectual property ownership assigned in this contract?'
+[cuad] 'Consider the Joint Venture Agreement for Hemp Farming between Novo Integrated Sciences Inc. and Harvest Gold Farms Inc.; Does this contract include any revenue or profit-sharing arrangements?'
+[maud] 'Consider the Merger Agreement between "Kite Realty Group Trust" and "Retail Properties of America, Inc."; Is there a Tail provision for acquisition proposals'
+[maud] 'Consider the Acquisition Agreement between Parent "Unifrax Holding Co." and Target "Lydall, Inc."; Information about the Closing Condition: Compliance with Covenants'
+[maud] 'Consider the Acquisition Agreement between Parent "HORIZON THERAPEUTICS USA, INC." and Target "VIELA BIO, INC."; Information about the Closing Condition: Compliance with Covenants'
+[maud] 'Consider the Acquisition Agreement between Parent "Lake Holdings, LP" and Target "Pluralsight, Inc."; Is there a Tail provision for acquisition proposals'
+[maud] 'Consider the Acquisition Agreement between Parent "Synaptics Incorporated" and Target "DSP Group, Inc."; Where is the Specific Performance clause'
+[privacy_qa] 'Consider "Wordscapes"\'s privacy policy; what data does it collect'
+[privacy_qa] 'Consider "Viber Messenger"\'s privacy policy; can my call log be subpoenaed?'
+[privacy_qa] 'Consider "Groupon"\'s privacy policy; what security system do you have in place for the app?'
+[privacy_qa] 'Consider "Wordscapes"\'s privacy policy; what information of mine does it access'
+[privacy_qa] 'Consider "Fiverr"\'s privacy policy; can i control the information that is presented to potential employers?'
+
+--- separator statistics ---
+contains ';': 1.000
+contains ':': 0.042
+contains ' - ': 0.002
+contains ' | ': 0.000
+contains '?': 0.752
+contains '\n': 0.000
+contains '"': 0.266
+first-8-token prefix repetition (top 5): {'Consider the Acquisition': 1187, 'Consider the Merger': 487, 'Consider the Strategic': 256, 'Consider the Co-Branding': 219, 'Consider the Sponsorship': 191}
+
+======================================================================
+2. gold_chunks format and doc_id linkage
+======================================================================
+chunks shape (160340, 3) | columns ['source', 'doc_id', 'text']
+gold_chunks[0] type ndarray value [116 117]
+gold per query: mean/min/max 2.92 1 29
+
+--- 12 sample doc_id values (4 per source) ---
+[contractnli] doc_id='contractnli/CopAcc_NDA-and-ToP-Mentors_2.0_2017.txt'
+[contractnli] doc_id='contractnli/CopAcc_NDA-and-ToP-Mentors_2.0_2017.txt'
+[contractnli] doc_id='contractnli/CopAcc_NDA-and-ToP-Mentors_2.0_2017.txt'
+[contractnli] doc_id='contractnli/CopAcc_NDA-and-ToP-Mentors_2.0_2017.txt'
+[cuad] doc_id='cuad/CybergyHoldingsInc_20140520_10-Q_EX-10.27_8605784_EX-10.27_Affiliate Agreement.txt'
+[cuad] doc_id='cuad/CybergyHoldingsInc_20140520_10-Q_EX-10.27_8605784_EX-10.27_Affiliate Agreement.txt'
+[cuad] doc_id='cuad/CybergyHoldingsInc_20140520_10-Q_EX-10.27_8605784_EX-10.27_Affiliate Agreement.txt'
+[cuad] doc_id='cuad/CybergyHoldingsInc_20140520_10-Q_EX-10.27_8605784_EX-10.27_Affiliate Agreement.txt'
+[maud] doc_id='maud/The Michaels Companies, Inc._Apollo Global Management, LLC.txt'
+[maud] doc_id='maud/The Michaels Companies, Inc._Apollo Global Management, LLC.txt'
+[maud] doc_id='maud/The Michaels Companies, Inc._Apollo Global Management, LLC.txt'
+[maud] doc_id='maud/The Michaels Companies, Inc._Apollo Global Management, LLC.txt'
+[privacy_qa] doc_id='privacy_qa/Fiverr.txt'
+[privacy_qa] doc_id='privacy_qa/Fiverr.txt'
+[privacy_qa] doc_id='privacy_qa/Fiverr.txt'
+[privacy_qa] doc_id='privacy_qa/Fiverr.txt'
+n distinct doc_id: 714
+
+--- query vs doc_id token overlap (does the query contain the doc name?) ---
+cuad: mean fraction of doc_id tokens found in query = 0.271 (n=889)
+maud: mean fraction of doc_id tokens found in query = 0.822 (n=367)
+contractnli: mean fraction of doc_id tokens found in query = 0.507 (n=198)
+privacy_qa: mean fraction of doc_id tokens found in query = 1.000 (n=46)
+
+======================================================================
+3. chunk text column (needed by the Matryoshka embedding step)
+======================================================================
+text-like columns found: ['text']
+text: chars median 500, max 500; words median 78, p95 87
+sample chunk: 'art of this Agreement;   (m)         unless otherwise specified herein, all accounting terms used herein will be interpreted, and all determinations with respect to accounting matters hereunder will be made, in accordance with GAAP, applied on a consistent basis;   (n)          any references to (i)'
+
+======================================================================
+4. embedding files and the encoders that made them
+======================================================================
+data/emb/A/chunks.npy: shape (160340, 768) dtype float32 norm[0]=1.0000
+data/emb/A/queries.npy: shape (6879, 768) dtype float32 norm[0]=1.0000
+data/emb/B/chunks.npy: shape (160340, 1024) dtype float32 norm[0]=1.0000
+data/emb/B/queries.npy: shape (6879, 1024) dtype float32 norm[0]=1.0000
+data/emb/M/chunks.npy: MISSING
+data/emb/M/queries.npy: MISSING
+model-name-like strings in project files (look for Model B's encoder):
+  rp_benchmark_scenario_D.py: MiniLM/Dense
+  rp_benchmark_scenario_D.py: sentence-transformers/all-MiniLM-L6-v2
+  rp_benchmark_scenario_D.py: BAAI/bge-base-en-v1.5
+  stage_h_lbrag.py: BAAI/bge-base-en-v1.5
+  verify_qrels.py: data_probe/awinml__legalbench-rag
+  supp_embed_q_instr.py: BAAI/bge-base-en-v1.5
+  precheck.py: Snowflake/snowflake-arctic-embed-m-v1.5
+  precheck.py: nomic-ai/nomic-embed-text-v1.5
+  precheck.py: mixedbread-ai/mxbai-embed-large-v1
+  precheck.py: Alibaba-NLP/gte-large-en-v1.5
+  precheck.py: jinaai/jina-embeddings-v3
+  prefix hint rp_benchmark_scenario_D.py: prefix="faiss_logistics.index"):
+  prefix hint rp_benchmark_scenario_D.py: prefix}.{tn}"))
+  prefix hint rp_benchmark_scenario_D.py: prefix", default="faiss_logistics.index")
+  prefix hint rp_benchmark_scenario_D.py: prefix)
+  prefix hint cfr.py: prefix", default="")
+  prefix hint cfr.py: prefix", default=""); p.add_argument("--device", default="cuda")
+  prefix hint cfr.py: prefix).astype("float32"))
+  prefix hint cfr.py: prefix).astype("float32"))
+  prefix hint cfr.py: prefix="src", drop_first=True).astype(float)], axis=1)
+  prefix hint patch_cfr.py: prefix="src", drop_first=True).astype(float)], axis=1)
+  prefix hint cfr_v2.py: prefix", default="")
+  prefix hint cfr_v2.py: prefix", default=""); p.add_argument("--device", default="cuda")
+  prefix hint cfr_v2.py: prefix).astype("float32"))
+  prefix hint cfr_v2.py: prefix).astype("float32"))
+  prefix hint cfr_v2.py: prefix="src", drop_first=True).astype(float)], axis=1)
+  prefix hint precheck.py: prefix repetition (top 5):", qr.text.astype(str).str.split().str[:3].str.join(" ").value_counts().head(5).to_dict())
+  prefix hint precheck.py: query_prefix|passage_prefix|prefix|instruction)[^\n]{0,120}", s, re.I):
+  prefix hint precheck.py: prefix hint {f}: {mm.group(0)[:140]}")
+  prefix hint precheck.py: prefix|e5|gte)[^\n]*", s):
+
+======================================================================
+5. machine: GPU, CPU, RAM, disk, libraries
+======================================================================
+torch 2.11.0+cu128 cuda available: True NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition
+cpu count 24
+MemTotal:       131558488 kB | MemAvailable:   117528848 kB
+disk free here: 899.2 GiB
+loadavg (1.94775390625, 1.91552734375, 2.06689453125)
+faiss 1.15.1
+sentence_transformers 6.1.0
+pyarrow 25.0.1
+matplotlib 3.11.2
+NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 18 MiB, 97887 MiB
+NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 2461 MiB, 97887 MiB
+
+======================================================================
+6. HuggingFace reachability and candidate Matryoshka models (config only, no weights)
+======================================================================
+OK   Snowflake/snowflake-arctic-embed-m-v1.5 | downloads 175480 | matryoshka tags: []
+OK   nomic-ai/nomic-embed-text-v1.5 | downloads 13082650 | matryoshka tags: []
+OK   mixedbread-ai/mxbai-embed-large-v1 | downloads 1973514 | matryoshka tags: []
+OK   Alibaba-NLP/gte-large-en-v1.5 | downloads 1175720 | matryoshka tags: []
+OK   jinaai/jina-embeddings-v3 | downloads 2044738 | matryoshka tags: []
+search 'matryoshka' (top 8 by downloads):
+   vllm-sr/mmbert-embed-32k-2d-matryoshka
+   Omartificial-Intelligence-Space/Arabic-Triplet-Matryoshka-V2
+   legaltextai/modernbert-embed-base-legaltextai-matryoshka-legaldataset
+   omarelshehy/Arabic-STS-Matryoshka-V2
+   philschmid/bge-base-financial-matryoshka
+   Fjoralb1/multilingual-e5-small-nli-matryoshka-128
+   NeuML/pubmedbert-base-embeddings-matryoshka
+   tomaarsen/mpnet-base-nli-matryoshka
+
+======================================================================
+7. previous outputs the new analyses depend on
+======================================================================
+A pq .npy: 15 | sqm: 15 | ladder .npy: 135 | raw: True
+B pq .npy: 15 | sqm: 15 | ladder .npy: 135 | raw: True
+evalcore.py: present
+supp_all.py: present
+supp_extra.py: MISSING
+embed_mrl.py: MISSING
+noname.py: MISSING
+run_extra.sh: MISSING
+
+PRECHECK DONE

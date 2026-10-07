@@ -1,0 +1,31 @@
+queries kept 6685 / 6879
+seed0 PQ m=16: train 7s total 10s
+seed0 SQ8 m=16 d=23
+seed0 PQ m=32: train 2s total 8s
+seed0 SQ8 m=32 d=39
+seed0 PQ m=64: train 3s total 11s
+seed0 SQ8 m=64 d=71
+seed0 PQ m=128: train 5s total 16s
+seed0 SQ8 m=128 d=135
+seed0 PQ m=256: train 8s total 34s
+seed0 SQ8 m=256 d=263
+seed1 PQ m=16: train 6s total 9s
+seed1 SQ8 m=16 d=23
+seed1 PQ m=32: train 2s total 6s
+seed1 SQ8 m=32 d=39
+seed1 PQ m=64: train 3s total 11s
+seed1 SQ8 m=64 d=71
+seed1 PQ m=128: train 5s total 14s
+seed1 SQ8 m=128 d=135
+seed1 PQ m=256: train 8s total 34s
+seed1 SQ8 m=256 d=263
+seed2 PQ m=16: train 5s total 8s
+seed2 SQ8 m=16 d=23
+seed2 PQ m=32: train 2s total 7s
+seed2 SQ8 m=32 d=39
+seed2 PQ m=64: train 2s total 11s
+seed2 SQ8 m=64 d=71
+seed2 PQ m=128: train 5s total 15s
+seed2 SQ8 m=128 d=135
+seed2 PQ m=256: train 8s total 34s
+seed2 SQ8 m=256 d=263
